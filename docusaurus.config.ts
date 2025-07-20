@@ -113,7 +113,7 @@ const config: Config = {
       title: "GooseLang",
       logo: {
         alt: "GooseLang",
-        src: "img/logo.svg",
+        src: "img/goose.png",
         href: "https://github.com/GooseLang-Dev",
       },
       items: [
