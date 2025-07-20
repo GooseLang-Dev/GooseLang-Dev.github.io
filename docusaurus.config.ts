@@ -114,7 +114,7 @@ const config: Config = {
       logo: {
         alt: "GooseLang",
         src: "img/goose.png",
-        href: "https://github.com/GooseLang-Dev",
+        href: "/",
       },
       items: [
         {

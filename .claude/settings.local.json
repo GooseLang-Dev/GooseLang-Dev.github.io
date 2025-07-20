@@ -6,7 +6,8 @@
       "Bash(mv:*)",
       "Bash(curl:*)",
       "Bash(ls:*)",
-      "WebFetch(domain:www.mongodb.com)"
+      "WebFetch(domain:www.mongodb.com)",
+      "WebFetch(domain:docusaurus.io)"
     ],
     "deny": []
   }

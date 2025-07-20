@@ -1,0 +1,10 @@
+{
+  "sidebar.devSidebar.category.Getting Started": {
+    "message": "🚀Getting Started",
+    "description": "hola"
+  },
+  "sidebar.devSidebar.category.Data Structure": {
+    "message": "🗃️Data Structre",
+    "description": "hola"
+  }
+}

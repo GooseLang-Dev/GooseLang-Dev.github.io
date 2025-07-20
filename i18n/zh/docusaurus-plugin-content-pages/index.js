@@ -15,7 +15,7 @@ function HomepageHeader() {
         <Heading as="h1" className="hero__title">
           GooseLang 文档中心
         </Heading>
-        <p className="hero__subtitle">最终的 GooseLang 开发&使用指南</p>
+        <p className="hero__subtitle">GooseLang 开发 & 使用的最终指南</p>
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
@@ -39,7 +39,7 @@ export default function Home() {
   return (
     <Layout
       title={`欢迎来到 ${siteConfig.title}`}
-      description="最终的 GooseLang 开发&使用指南">
+      description="GooseLang 开发 & 使用的终极指南">
       <HomepageHeader />
       <main>
         <HomepageFeatures />
