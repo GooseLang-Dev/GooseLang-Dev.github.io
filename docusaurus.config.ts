@@ -6,7 +6,7 @@ import { themes as prismThemes } from "prism-react-renderer";
 const config: Config = {
   title: "GooseLang Documentation",
   tagline: "The Ultimate Guide to GooseLang Development & Usage",
-  favicon: "img/favicon.ico",
+  favicon: "img/goose.png",
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
