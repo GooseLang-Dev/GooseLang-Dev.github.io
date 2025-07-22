@@ -1,0 +1,8 @@
+{
+  "label": "Media Components",
+  "position": 5,
+  "link": {
+    "type": "generated-index",
+    "description": "Documentation for media form components used in GooseLang UI templates."
+  }
+}

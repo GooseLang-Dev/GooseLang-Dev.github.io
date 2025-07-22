@@ -1,10 +1,18 @@
 {
   "sidebar.devSidebar.category.Getting Started": {
-    "message": "🚀Getting Started",
-    "description": "hola"
+    "message": "🚀快速开始",
+    "description": "分类是用于组织文档的方式。每个分类可以包含多个文档和子分类。"
   },
   "sidebar.devSidebar.category.Data Structure": {
-    "message": "🗃️Data Structre",
+    "message": "🗃️数据结构",
+    "description": "hola"
+  },
+  "sidebar.devSidebar.category.Input Form": {
+    "message": "📝Input Form",
+    "description": "hola"
+  },
+  "sidebar.devSidebar.category.Media Components": {
+    "message": "🎥Media Components",
     "description": "hola"
   }
 }

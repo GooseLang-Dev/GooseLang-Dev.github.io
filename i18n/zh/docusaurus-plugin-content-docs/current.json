@@ -6,5 +6,13 @@
   "sidebar.devSidebar.category.Data Structure": {
     "message": "🗃️数据结构",
     "description": "hola"
+  },
+  "sidebar.devSidebar.category.Input Form": {
+    "message": "📝输入组件",
+    "description": "hola"
+  },
+  "sidebar.devSidebar.category.Media Components": {
+    "message": "🎥媒体组件",
+    "description": "hola"
   }
 }
