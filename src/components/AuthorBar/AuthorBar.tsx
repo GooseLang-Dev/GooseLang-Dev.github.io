@@ -22,6 +22,9 @@ export function AuthorBar(props: {
     if(metadata.permalink.startsWith('/zh') && metadata.source.indexOf('i18n/zh') < 0) {
       return true;
     }
+    if(metadata.permalink.startsWith('/jp') && metadata.source.indexOf('i18n/jp') < 0) {
+      return true;
+    }
     return false;
   }, [metadata]);
 
@@ -29,7 +32,7 @@ export function AuthorBar(props: {
     <div className="doc-author-bar">
       <div className="line bar-title">
         <h2><Translate id="authbar.contributions">Contributions</Translate></h2>
-        <a href={`https://github.com/GooseLang-Dev/gooselang.github.io/edit/main/${source.replace('@site/', '')}`}>
+        <a href={`https://github.com/HakuyaLabs/warudo-doc/edit/master/${source.replace('@site/', '')}`}>
           <span className="icon"><IoCreateOutline /></span> Edit on Github
         </a>
       </div>
@@ -40,7 +43,7 @@ export function AuthorBar(props: {
             id="authbar.contributions.untranslated.title"
             description='This title shows at bottom of doc page which not translated and used its english version.'
           >
-            Help us improve documentation!
+            Help us improve handbook!
           </Translate></h3>
           <p><Translate
             id="authbar.contributions.untranslated.message"
@@ -56,7 +59,7 @@ export function AuthorBar(props: {
         <div className="persons">
           {authors.creators.map((author) => {
             return (
-              <a target='_blank' href={`https://github.com/${author.github}?utm_source=gooselang.github.io`}>
+              <a target='_blank' href={`https://github.com/${author.github}?utm_source=docs.warudo.app`}>
                 <div className="person">
                   <img src={`https://unavatar.io/github/${author.github}`} />
                   <span>{author.name}</span>
@@ -73,7 +76,7 @@ export function AuthorBar(props: {
         <div className="persons">
           {authors.translators.map((author) => {
             return (
-              <a target='_blank' href={`https://github.com/${author.github}?utm_source=gooselang.github.io`}>
+              <a target='_blank' href={`https://github.com/${author.github}?utm_source=docs.warudo.app`}>
                 <div className="person">
                   <img src={`https://unavatar.io/github/${author.github}`} />
                   <span>{author.name}</span>
