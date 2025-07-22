@@ -28,9 +28,6 @@ GooseLang/
 ├── packages/                # Plugin ecosystem (every subdirectory is a plugin)
 │   ├── gooselang/           # [Core Plugin] Main service framework
 │   ├── ui-default/          # [UI Plugin] Default frontend interface
-│   ├── utils/               # [Utility Plugin] Common utility library
-│   ├── openapi/             # [Docs Plugin] API documentation generator
-│   ├── loader/              # [Loader Plugin] Dynamic resource loader
 │   ├── elastic/             # [Search Plugin] Elasticsearch integration
 │   ├── geoip/               # [GeoIP Plugin] IP geolocation service
 │   ├── login-with-github/   # [Auth Plugin] GitHub OAuth
@@ -248,9 +245,6 @@ Built on the **Cordis** dependency injection framework.
 | ------------------- | -------------------------------- | ------------------- |
 | `gooselang`         | Core service framework           | ✅ Fully implemented |
 | `ui-default`        | Default frontend UI              | ✅ Fully implemented |
-| `utils`             | Common utility library           | ✅ Fully implemented |
-| `loader`            | Dynamic resource loader          | ✅ Fully implemented |
-| `openapi`           | API documentation generator      | ✅ Fully implemented |
 | `elastic`           | Elasticsearch integration        | ✅ Fully implemented |
 | `geoip`             | IP geolocation service           | ✅ Fully implemented |
 | `login-with-github` | GitHub OAuth authentication      | ✅ Fully implemented |

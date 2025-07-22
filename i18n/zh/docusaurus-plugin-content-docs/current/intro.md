@@ -28,9 +28,6 @@ GooseLang/
 ├── packages/                # 插件生态系统 (所有子目录都是插件)
 │   ├── gooselang/           # [核心插件] 主服务框架
 │   ├── ui-default/          # [界面插件] 默认前端界面
-│   ├── utils/               # [工具插件] 公共工具库
-│   ├── openapi/             # [文档插件] API文档生成
-│   ├── loader/              # [加载插件] 动态资源加载器
 │   ├── elastic/             # [搜索插件] Elasticsearch集成
 │   ├── geoip/               # [地理插件] IP地理位置服务
 │   ├── login-with-github/   # [认证插件] GitHub OAuth
@@ -248,9 +245,6 @@ React组件 → API调用 → Koa路由 → Service层 → Model层 → MongoDB
 | -------------------- | ---------------------------- | ------------------ |
 | `gooselang`          | 核心服务框架                 | ✅ 完整实现        |
 | `ui-default`         | 默认前端界面                 | ✅ 完整实现        |
-| `utils`              | 公共工具库                   | ✅ 完整实现        |
-| `loader`             | 动态资源加载器               | ✅ 完整实现        |
-| `openapi`            | API文档生成                  | ✅ 完整实现        |
 | `elastic`            | Elasticsearch搜索集成        | ✅ 完整实现        |
 | `geoip`              | IP地理位置服务               | ✅ 完整实现        |
 | `login-with-github`  | GitHub OAuth认证             | ✅ 完整实现        |
