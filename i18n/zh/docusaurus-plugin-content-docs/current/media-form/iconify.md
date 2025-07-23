@@ -81,6 +81,36 @@ id: iconify
 ```
 - 用于语言切换、主题切换和用户菜单图标
 
+### Line MD 动态图标
+```jinja2
+{{ media.iconify('line-md:home-simple', 'line-md:home-simple-twotone') }}
+{{ media.iconify('line-md:menu', 'line-md:menu-to-close-alt-transition') }}
+{{ media.iconify('line-md:search', 'line-md:search-twotone') }}
+{{ media.iconify('line-md:loading-loop') }}
+{{ media.iconify('line-md:spinner-twotone') }}
+```
+- 来自 [Line MD 图标集](https://icon-sets.iconify.design/line-md/) 的动画和动态图标。
+
+### MDI 静态图标
+```jinja2
+{{ media.iconify('mdi:account') }}
+{{ media.iconify('mdi:settings') }}
+{{ media.iconify('mdi:bell') }}
+{{ media.iconify('mdi:bookmark') }}
+{{ media.iconify('mdi:file-document') }}
+```
+- 来自 [Material Design Icons](https://icon-sets.iconify.design/mdi/) 的静态图标。
+
+### 国旗图标
+```jinja2
+{{ media.iconify('flag:us-4x3') }}
+{{ media.iconify('flag:cn-4x3') }}
+{{ media.iconify('flag:gb-4x3') }}
+{{ media.iconify('flag:fr-4x3') }}
+{{ media.iconify('flag:de-4x3') }}
+```
+- 来自 [Flag 图标集](https://icon-sets.iconify.design/flag/) 的国旗图标。
+
 ### 按钮与操作
 ```jinja2
 {{ media.iconify('mdi:trash-can-outline', 'line-md:trash') }}

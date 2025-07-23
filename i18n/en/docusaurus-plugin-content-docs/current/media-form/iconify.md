@@ -81,6 +81,36 @@ Renders as:
 ```
 - Used for language, theme, and user menu icons.
 
+### Dynamic Icons from Line MD
+```jinja2
+{{ media.iconify('line-md:home-simple', 'line-md:home-simple-twotone') }}
+{{ media.iconify('line-md:menu', 'line-md:menu-to-close-alt-transition') }}
+{{ media.iconify('line-md:search', 'line-md:search-twotone') }}
+{{ media.iconify('line-md:loading-loop') }}
+{{ media.iconify('line-md:spinner-twotone') }}
+```
+- Animated and dynamic icons from [Line MD icon set](https://icon-sets.iconify.design/line-md/).
+
+### Static Icons from MDI
+```jinja2
+{{ media.iconify('mdi:account') }}
+{{ media.iconify('mdi:settings') }}
+{{ media.iconify('mdi:bell') }}
+{{ media.iconify('mdi:bookmark') }}
+{{ media.iconify('mdi:file-document') }}
+```
+- Static icons from [Material Design Icons](https://icon-sets.iconify.design/mdi/).
+
+### Flag Icons
+```jinja2
+{{ media.iconify('flag:us-4x3') }}
+{{ media.iconify('flag:cn-4x3') }}
+{{ media.iconify('flag:gb-4x3') }}
+{{ media.iconify('flag:fr-4x3') }}
+{{ media.iconify('flag:de-4x3') }}
+```
+- Country flags from [Flag icon set](https://icon-sets.iconify.design/flag/).
+
 ### Buttons and Actions
 ```jinja2
 {{ media.iconify('mdi:trash-can-outline', 'line-md:trash') }}
