@@ -1,6 +1,6 @@
 {
-  "sidebar.devSidebar.category.Getting Started": {
-    "message": "🚀快速开始",
+  "sidebar.devSidebar.category.Dev Deployment": {
+    "message": "🚀开发部署",
     "description": "分类是用于组织文档的方式。每个分类可以包含多个文档和子分类。"
   },
   "sidebar.devSidebar.category.Data Structure": {

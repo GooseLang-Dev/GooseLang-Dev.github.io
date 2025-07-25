@@ -6,28 +6,40 @@ title: Introduction
 
 # GooseLang Language Learning Platform  
 
-## Project Architecture Overview
+## What is GooseLang?
 
-### Tech Stack
+GooseLang is a comprehensive language learning platform that combines traditional language learning features with modern speech synthesis and translation services. The platform focuses on providing listening, speaking, reading, writing, vocabulary, and grammar exercises powered by advanced AI services.
+
+### Key Features
+
+- **Multi-modal Learning**: Listening, speaking, reading, writing, vocabulary, and grammar exercises
+- **Speech Synthesis**: Real-time text-to-speech with WebSocket communication
+- **Translation Services**: Multilingual translation support via LibreTranslate and other engines
+- **Interactive UI**: React-powered components for dynamic user interactions
+- **Plugin Architecture**: Extensible system built on Cordis dependency injection framework
+- **Server-Side Rendering**: Hybrid SSR + React architecture for optimal performance
+
+---
+
+## 🏗️ Project Architecture Overview
+
+### 🛠️ Tech Stack
 
 - **Backend**: TypeScript + Node.js + Koa.js  
 - **Frontend**: TypeScript/JavaScript + React + jQuery  
 - **Database**: MongoDB  
 - **Build Tools**: Yarn Workspaces + Webpack + TypeScript  
-- **Editor**: Monaco Editor + Markdown Editor (md-editor-rt)  
-- **Speech Synthesis**: WebSocket connection to speech synthesis engine  
-- **Translation Service**: WebSocket connection to translation engine  
+- **Editors**: Monaco Editor + Markdown Editor (md-editor-rt)  
+- **Services**: Speech Synthesis & Translation via WebSocket
 - **Deployment**: Docker + Kubernetes + Caddy reverse proxy  
 
----
-
-### Monorepo Structure
+### 📁 Monorepo Structure
 
 ```text
 GooseLang/
 ├── packages/                # Plugin ecosystem (every subdirectory is a plugin)
-│   ├── gooselang/           # [Core Plugin] Main service framework
-│   ├── ui-default/          # [UI Plugin] Default frontend interface
+│   ├── gooselang/           # [CORE] [Backend] Main service framework
+│   ├── ui-default/          # [CORE] [Frontend] Default frontend interface
 │   ├── elastic/             # [Search Plugin] Elasticsearch integration
 │   ├── geoip/               # [GeoIP Plugin] IP geolocation service
 │   ├── login-with-github/   # [Auth Plugin] GitHub OAuth
@@ -43,11 +55,14 @@ GooseLang/
 └── plugins/                 # External plugin development directory
 ```
 
----
+### 🔌 Plugin Architecture
 
-### Plugin Architecture
+Built on the **Cordis** dependency-injection framework with:
 
-Built on the **Cordis** dependency-injection framework.
+- **Dynamic Loading**: Hot plugin load/unload support
+- **Event-Driven**: Rich event hook system for extensibility
+- **Type Safety**: Full TypeScript support throughout
+- **Configuration Management**: Schema-driven config validation
 
 #### Core Plugins
 
@@ -61,37 +76,43 @@ Built on the **Cordis** dependency-injection framework.
 
 ---
 
-## Code File Dependency Relationships
+## 📊 Code File Dependency Relationships
 
 ### Core Dependency Graph
 
 ```text
 gooselang (Main Service)
-├── model/      (Data Model Layer)
-│   ├── language.ts   (Language configuration management)
-│   ├── question.ts   (Question management)
-│   ├── material.ts   (Learning material management)
-│   ├── training.ts   (Training course management)
-│   └── user.ts       (User management)
-├── handler/    (Route Handling Layer)
-│   ├── training.ts      (Training course handler)
-│   ├── homework.ts      (Homework management)
-│   ├── translate.ts     (Translation service)
-│   └── synthesize.ts    (Speech synthesis)
-├── service/    (Business Logic Layer)
-├── lib/        (Utility libraries)
-└── interface/  (Type definitions)
+├── model/       # Data Model Layer
+│   ├── language.ts      # Language configuration management
+│   ├── question.ts      # Question management
+│   ├── material.ts      # Learning material management
+│   ├── training.ts      # Training course management
+│   └── user.ts          # User management
+├── handler/     # Route Handling Layer
+│   ├── training.ts      # Training course handler
+│   ├── homework.ts      # Homework management
+│   ├── translate.ts     # Translation service
+│   └── synthesize.ts    # Speech synthesis
+├── service/     # Business Logic Layer
+├── lib/         # Utility libraries
+└── interface/   # Type definitions
 
 ui-default (Frontend)
-├── components/   (React components)
-├── pages/        (Page components)
-├── templates/    (HTML templates)
-│   └── partials/question_submit_multi.html (Multi-choice submission UI)
-├── static/       (Static assets)
-└── build/        (Build configuration)
+├── components/          # React Components
+│   ├── autocomplete/        # Input selection system
+│   ├── dialog/              # Modal and dialog components
+│   ├── editor/              # Monaco & markdown editors
+│   ├── form/                # Form input components
+│   ├── messagepad/          # Real-time messaging
+│   ├── navigation/          # Navigation and menus
+│   └── react/               # Core React utilities
+├── pages/               # Page-specific Components & Styles
+├── templates/           # Nunjucks SSR Templates
+│   ├── layout/              # Base layout templates
+│   └── partials/            # Reusable template parts
+├── static/              # Static Assets
+└── common/              # Shared Stylus variables and mixins
 ```
-
----
 
 ### Key Dependencies
 
@@ -103,7 +124,7 @@ ui-default (Frontend)
 
 ---
 
-## Functional Module Call Flow
+## 🔄 Functional Module Call Flow
 
 ### User Authentication Flow
 
@@ -112,8 +133,6 @@ User login → UserModel.getById() → Session validation → Permission check �
 ```
 
 ### Language Learning Exercise Flow
-
-> _(Needs improvement: flow should be expanded for clarity and completeness)_
 
 ```text
 Exercise submission → QuestionModel.get() → Answer validation → Progress update → Result storage → Real-time feedback
@@ -146,85 +165,120 @@ React component → API call → Koa route → Service layer → Model layer →
 
 ---
 
-## Key Code File Index
+## 🎯 Development Considerations
 
-### Core System Files
+When getting started with GooseLang development, understand these two main areas:
 
-| Module              | Key File                                       | Description                       |
-| ------------------- | ---------------------------------------------- | --------------------------------- |
-| Service Entry       | `packages/gooselang/src/index.ts`              | Main service startup              |
-| Routing System      | `packages/gooselang/src/handler/`              | HTTP route handlers               |
-| Data Models         | `packages/gooselang/src/model/`                | MongoDB model definitions         |
-| Language Config     | `packages/gooselang/src/model/language.ts`     | Multi-language configuration      |
-| Question Model      | `packages/gooselang/src/model/question.ts`     | Language exercise question model  |
-| Material Model      | `packages/gooselang/src/model/material.ts`     | Learning materials management     |
-| Training Handler    | `packages/gooselang/src/handler/training.ts`   | Training course handling          |
-| Synthesis Handler   | `packages/gooselang/src/handler/synthesize.ts` | Text-to-speech processing         |
-| Translation Handler | `packages/gooselang/src/handler/translate.ts`  | Multilingual translation handling |
-| Frontend Entry      | `packages/ui-default/build/main.ts`            | Webpack build configuration       |
+### Quick Start Guidance
 
----
+**For Frontend Development:**
+- Use [Input Form](/dev/category/input-form) templates for all form components
+- Use [Media Form](/dev/category/media-form) for image/audio handling
+- Understand the hybrid SSR + React architecture
 
-### Configuration Files
-
-| Config Type          | File Path                                                | Description                          |
-| -------------------- | -------------------------------------------------------- | ------------------------------------ |
-| Database Connection  | `config.json`                                            | MongoDB connection settings          |
-| Supported Languages  | `packages/gooselang/src/model/language.ts`               | Config for supported study languages |
-| User Permissions     | `packages/gooselang/src/model/user.ts`                   | User permission management           |
-| File Storage         | `packages/gooselang/src/settings.ts`                     | File storage path configuration      |
-| Translation Settings | `goosetranslator.supported_languages` in system settings | Supported translation languages      |
+**For Backend Development:**
+- Follow the Database → Handlers → Webpage flow for GET requests
+- Follow the Webpage → Handlers → Database flow for POST requests
+- Work with Nunjucks templates and markdown-it processing
 
 ---
 
-## Project Completion Status
+## 🎨 Frontend Development Deep Dive
 
-### Overall Completion: **70%**
+### Styling Architecture
 
-#### Core Features Implemented ✅
-<details>
-<summary>Show Fully Integrated Features</summary>
-1. **User Authentication System** – Fully implemented (registration, login, permission management)
-2. **Target Language Configuration Management** – Fully implemented (supports English, Chinese, Spanish, etc.)
-3. **Language Exercise & Editing System** – Fully implemented (listening, speaking, reading, writing, vocabulary, grammar)
-4. **File Upload System** – Fully implemented (for learning materials and course files)
-5. **Notifications** – Fully implemented (in-app messages, real-time push)
-6. **Internationalization Support** – Fully implemented (multi-language UI switching)
-7. **Speech Synthesis Service** – Fully implemented (text-to-speech, WebSocket communication) **via plugin**
-</details>
+- **Foundation UI CSS Framework**: Uses **partial Foundation UI** (https://get.foundation/sites/docs/) - specifically only the `.css` parts rewritten in `.styl` (Stylus) files
+- **No JavaScript Dependencies**: Foundation's JavaScript components are NOT used - only CSS grid, typography, and basic component styles are adapted for layout
+- **Stylus Preprocessing**: All styles use Stylus (`.styl` files) with shared imports from `common/` directory
+- **Page-Specific Styles**: Define as `pagename.page.styl` under `pages/` directory
+- **Responsive Breakpoints**: Defined in `breakpoints.json` and used with Rupture mixin system
 
-#### Partially Completed Features 🔄
+### ⚛️ React Integration
 
-<details>
-<summary>Show Partially Completed Features</summary>
+- **Client-Side Interactions**: React is used specifically for **on-page UX user interactions** and dynamic components
+- **Custom Reusable Components**: Extensive library of custom UI components with TypeScript support
+- **SSR Templates**: Server-side rendered HTML templates work alongside React components
+- **Hybrid Architecture**: Traditional server-rendered pages enhanced with React for interactive elements
 
-1. **Mobile Responsiveness** – 60% (basic responsive layout; needs optimization)
-2. **API Documentation** – 70% (OpenAPI spec; some endpoints missing)
-3. **Unit Testing** – 30% (some core modules tested; coverage needs improvement)
-4. **Performance Monitoring** – 40% (basic logging; lacks full monitoring)
-5. **Speech Recognition** – 50% (framework in place; recognition algorithms need refinement)
-6. **Discussion Community** – 80% (course discussions, comments, likes; custom channels/nodes needed)
-7. **Course Training System** – 50% (course creation, progress tracking, DAG support; UI/UX updates required)
-8. **Homework Management System** – 50% (publishing, submission, grading; UI/UX updates required)
-9. **Translation Service** – 80% (real-time translation via LibreTranslate; additional engines like Google, Bing to be added) **via plugin**
-10. **Exercise Judging Logic** – 40% (only multi-choice supported; needs text, audio, matching question support) _(Need improvement: see Chinese doc note)_
+### 🧩 Component Architecture
 
-</details>
+- **Input Forms**: Use pre-defined input templates in [Input Form](/dev/category/input-form) for all form components
+- **Media Handling**: Use pre-defined media-form in [Media Form](/dev/category/media-form) for image/audio showcase and upload functionality
+- **Monaco Editor Integration**: Custom Monaco editor setup with language support
+- **Icon System**: Iconify integration for unified icon interface
 
-#### Not Yet Implemented Features ❌
-
-<details>
-<summary>Show ot Yet Implemented Features</summary>
-
-- Intelligent Pronunciation Assessment
-- AI-powered Learning Path Recommendations
-- Learning Progress Analytics & Reporting
-- Cluster Load Balancing (currently single-node; scalability improvements needed)
-
-</details>
 ---
 
-## Plugin System Architecture
+## 🔧 Backend Development Deep Dive
+
+### Server-Side Rendering (SSR)
+
+- **Nunjucks Templating Engine**: Primary template engine for HTML generation
+- **Markdown-it Integration**: Advanced markdown processing with custom plugins (KaTeX, Mermaid, media embeds)
+- **Template Hierarchy**: Layout inheritance system (`layout/basic.html` → `layout/html5.html`)
+- **Custom Filters**: Extensive Nunjucks filters for markdown, JSON, XSS protection, and content processing
+
+### 📊 Data Flow Patterns
+
+**GET Method (Loading Data):**
+```text
+Database → Handlers → Webpage
+```
+
+**POST Method (Updating Data):**  
+```text
+Webpage → Handlers → Database
+```
+
+### 🛠️ Key Backend Technologies
+
+- **Template System**: Nunjucks with custom loader supporting development and production modes
+- **Markdown Processing**: markdown-it with plugins for KaTeX, Mermaid, media embeds, XSS protection
+- **Content Management**: Multilingual content support with language-specific rendering
+- **File Handling**: Custom file URL processing and secure path resolution
+- **XSS Protection**: Built-in XSS filtering integrated into markdown and template rendering
+
+### ⚠️ Critical Development Notes
+
+1. **Template Caching**: Development mode uses `noCache: true` for hot reloading
+2. **Security**: XSS protection is deeply integrated - never bypass the built-in filters
+3. **Content Processing**: Markdown content supports multilingual objects with automatic language selection
+4. **Performance**: Template rendering is monitored - renders over 5000ms are logged as errors
+
+---
+
+## 🧩 UI Components & Templates
+
+GooseLang provides a comprehensive component library for consistent UI development across the platform.
+
+### 📝 Standard Form Components
+
+For all form-related UI development, use the standardized component templates:
+
+- **[Input Form Components](/dev/category/input-form)**: Complete documentation for text inputs, textareas, selects, checkboxes, radio buttons, and switches
+- **[Media Form Components](/dev/category/media-form)**: Comprehensive guide for image handling, audio components, audio buttons, and Iconify integration
+
+### 🔧 Core Component Library
+
+The platform includes several highly reusable components:
+
+- **AutoComplete System**: Advanced search and selection with async data loading, drag-and-drop sorting, and keyboard navigation
+- **Editor Components**: Monaco code editor and markdown editor with syntax highlighting and multilingual support
+- **Dialog System**: Modal dialogs for information, actions, and confirmations
+- **Icon System**: Unified Iconify integration for consistent iconography
+
+### 📚 Component Documentation
+
+For detailed component specifications, implementation examples, and usage guidelines, refer to the dedicated component documentation sections linked above. These provide comprehensive coverage of:
+
+- Component APIs and props
+- Implementation examples
+- Styling guidelines
+- Best practices and common patterns
+
+---
+
+## 🔌 Plugin System Architecture
 
 ### Plugin System Features
 
@@ -232,12 +286,12 @@ Built on the **Cordis** dependency injection framework.
 
 #### Core Features ✅
 
-- Dynamic Loading – Support for hot plugin load/unload
-- Event-Driven – Rich event hook system
-- Type Safety – Full TypeScript support
-- Dependency Injection – Cordis-based DI container
-- Configuration Management – Schema-driven config validation
-- Lifecycle Management – Complete plugin lifecycle support
+- **Dynamic Loading** – Support for hot plugin load/unload
+- **Event-Driven** – Rich event hook system
+- **Type Safety** – Full TypeScript support
+- **Dependency Injection** – Cordis-based DI container
+- **Configuration Management** – Schema-driven config validation
+- **Lifecycle Management** – Complete plugin lifecycle support
 
 #### Built-in Plugins
 
@@ -292,122 +346,81 @@ Core events that plugins can listen for:
 
 ---
 
-## Reusable UI Component Inventory
+## 📋 Project Completion Status
 
-### Highly Reusable Components
+### Overall Completion: **70%**
 
-#### 1. AutoComplete Component
+#### ✅ Core Features Implemented
+<details>
+<summary>Show Fully Integrated Features</summary>
 
-- **Location**: `packages/ui-default/components/autocomplete/components/AutoComplete.tsx`
-- **Features**:
-  - Single/multiple-selection modes
-  - Asynchronous data loading and caching
-  - Drag-and-drop sorting
-  - Keyboard navigation
-  - Free input mode (freeSolo)
-- **Reuse Value**: ⭐⭐⭐⭐⭐ (Core interaction component)
+1. **User Authentication System** – Fully implemented (registration, login, permission management)
+2. **Target Language Configuration Management** – Fully implemented (supports English, Chinese, Spanish, etc.)
+3. **Language Exercise & Editing System** – Fully implemented (listening, speaking, reading, writing, vocabulary, grammar)
+4. **File Upload System** – Fully implemented (for learning materials and course files)
+5. **Notifications** – Fully implemented (in-app messages, real-time push)
+6. **Internationalization Support** – Fully implemented (multi-language UI switching)
+7. **Speech Synthesis Service** – Fully implemented (text-to-speech, WebSocket communication)
 
-#### 2. Editor Component
+</details>
 
-- **Location**: `packages/ui-default/components/editor/index.tsx`
-- **Features**:
-  - Monaco code editor integration
-  - Markdown editor integration
-  - Syntax highlighting, code completion
-  - Theme switching, auto-layout
-  - Multilingual support
-- **Reuse Value**: ⭐⭐⭐⭐⭐ (Core functionality component)
+#### 🔄 Partially Completed Features
+<details>
+<summary>Show Partially Completed Features</summary>
 
-#### 3. Dialog System
+1. **Mobile Responsiveness** – 60% (basic responsive layout; needs optimization)
+2. **API Documentation** – 70% (OpenAPI spec; some endpoints missing)
+3. **Unit Testing** – 30% (some core modules tested; coverage needs improvement)
+4. **Performance Monitoring** – 40% (basic logging; lacks full monitoring)
+5. **Speech Recognition** – 50% (framework in place; recognition algorithms need refinement)
+6. **Discussion Community** – 80% (course discussions, comments, likes; custom channels/nodes needed)
+7. **Course Training System** – 50% (course creation, progress tracking, DAG support; UI/UX updates required)
+8. **Homework Management System** – 50% (publishing, submission, grading; UI/UX updates required)
+9. **Translation Service** – 80% (real-time translation via LibreTranslate; additional engines like Google, Bing to be added)
+10. **Exercise Judging Logic** – 40% (only multi-choice supported; needs text, audio, matching question support)
 
-- **Location**: `packages/ui-default/components/dialog/index.tsx`
-- **Features**:
-  - InfoDialog (informational prompts)
-  - ActionDialog (confirmation prompts)
-  - ConfirmDialog (selection confirmation)
-  - Customizable size and styling
-- **Reuse Value**: ⭐⭐⭐⭐ (General UI component)
+</details>
 
-#### 4. Icon Component
+#### ❌ Not Yet Implemented Features
+<details>
+<summary>Show Not Yet Implemented Features</summary>
 
-- **Location**: `packages/ui-default/components/react/IconComponent.tsx`
-- **Features**:
-  - Iconify icon library integration
-  - Unified icon interface
-  - Size and color customization
-- **Reuse Value**: ⭐⭐⭐⭐ (Basic UI component)
+- Intelligent Pronunciation Assessment
+- AI-powered Learning Path Recommendations
+- Learning Progress Analytics & Reporting
+- Cluster Load Balancing (currently single-node; scalability improvements needed)
 
----
-
-### Domain-Specific Components
-
-#### 5. ProblemConfigEditor 
-:::warning
-_This component is kept from the OJ (Online Judge) system for reference purposes. It is not fully integrated into GooseLang, but serves as a useful example for programming exercise configuration._
-:::
-
-- **Location**: `packages/ui-default/components/problemconfig/ProblemConfigEditor.tsx`
-- **Features**:
-  - YAML-based programming exercise config editor
-  - Test case input/output configuration
-  - Time and memory limit settings
-  - Checker and interactor configuration
-  - Live preview and validation
-  - Diff comparison display
-- **Reuse Value**: ⭐⭐⭐ (Specialized for online judge systems) 
-
-#### 6. MessagePad
-
-- **Location**: `packages/ui-default/components/messagepad/`
-- **Features**:
-  - Conversation list and content display
-  - Real-time message push
-  - Historical message lazy loading
-- **Reuse Value**: ⭐⭐⭐ (General social feature)
+</details>
 
 ---
 
-### Utility Components
+## 📁 Key File References
 
-#### 7. DomComponent
+### Core System Files
 
-- **Location**: `packages/ui-default/components/react/DomComponent.tsx`
-- **Features**:
-  - Bridges jQuery DOM elements with React components
-- **Reuse Value**: ⭐⭐ (Migration transitional component)
+| Module              | Key File                                       | Description                       |
+| ------------------- | ---------------------------------------------- | --------------------------------- |
+| Service Entry       | `packages/gooselang/src/index.ts`              | Main service startup              |
+| Routing System      | `packages/gooselang/src/handler/`              | HTTP route handlers               |
+| Data Models         | `packages/gooselang/src/model/`                | MongoDB model definitions         |
+| Language Config     | `packages/gooselang/src/model/language.ts`     | Multi-language configuration      |
+| Question Model      | `packages/gooselang/src/model/question.ts`     | Language exercise question model  |
+| Material Model      | `packages/gooselang/src/model/material.ts`     | Learning materials management     |
+| Training Handler    | `packages/gooselang/src/handler/training.ts`   | Training course handling          |
+| Synthesis Handler   | `packages/gooselang/src/handler/synthesize.ts` | Text-to-speech processing         |
+| Translation Handler | `packages/gooselang/src/handler/translate.ts`  | Multilingual translation handling |
+| Frontend Entry      | `packages/ui-default/build/main.ts`            | Webpack build configuration       |
 
-#### 8. PanelComponent
-:::warning
-_This component is kept from the OJ (Online Judge) system for reference purposes. It is not fully integrated into GooseLang, but serves as a useful example for programming exercise configuration._
-:::
+### Configuration Files
 
-- **Location**: `packages/ui-default/components/scratchpad/PanelComponent.jsx`
-- **Features**:
-  - Standardized panel layout container
-- **Reuse Value**: ⭐⭐⭐ (Layout component)
-
----
-
-### Specialized Selector Components
-
-#### 9. Various AutoComplete Variants
-
-- **Location**: `packages/ui-default/components/autocomplete/`
-  - `UserSelectAutoComplete` (User selection)
-  - `ProblemSelectAutoComplete` (Exercise selection)
-  - `FileSelectAutoComplete` (File selection)
-  - `SpaceSelectAutoComplete` (Workspace selection)
-- **Reuse Value**: ⭐⭐⭐ (Business-specific selector components)
+| Config Type          | File Path                                                | Description                          |
+| -------------------- | -------------------------------------------------------- | ------------------------------------ |
+| Database Connection  | `config.json`                                            | MongoDB connection settings          |
+| Supported Languages  | `packages/gooselang/src/model/language.ts`               | Config for supported study languages |
+| User Permissions     | `packages/gooselang/src/model/user.ts`                   | User permission management           |
+| File Storage         | `packages/gooselang/src/settings.ts`                     | File storage path configuration      |
+| Translation Settings | `goosetranslator.supported_languages` in system settings | Supported translation languages      |
 
 ---
 
-### Component Reuse Recommendations
-
-1. **Highly reusable components** can be extracted and published as independent NPM packages.
-2. **Business-specific components** fit best in similar language-learning systems.
-3. **Basic UI components** should standardize interfaces for greater generality.
-4. **Utility components** serve as reference implementations during tech migrations.
-
----
-
-*This documentation is generated based on analysis of the GooseLang language learning platform code. It covers project architecture, dependencies, module flows, file indexing, completion status, and UI component inventory. The platform focuses on comprehensive language-learning features—listening, speaking, reading, writing, vocabulary, and grammar—powered by advanced speech synthesis and translation services.*
+*This introduction provides comprehensive guidance for developing within the GooseLang language learning platform. The plugin-based architecture enables extensibility and maintainability, while the hybrid SSR + React frontend provides both performance and interactivity for educational applications.*
