@@ -278,71 +278,24 @@ For detailed component specifications, implementation examples, and usage guidel
 
 ---
 
-## 🔌 Plugin System Architecture
+## 🔌 Plugin System
 
-### Plugin System Features
+GooseLang is built on a comprehensive plugin-based architecture using the **Cordis** dependency injection framework, enabling modular development and extensibility.
 
-Built on the **Cordis** dependency injection framework.
+### Key Plugin Features
 
-#### Core Features ✅
+- **Dynamic Loading**: Hot plugin load/unload support
+- **Event-Driven**: Rich event hook system for extensibility
+- **Type Safety**: Full TypeScript support throughout
+- **Configuration Management**: Schema-driven config validation
 
-- **Dynamic Loading** – Support for hot plugin load/unload
-- **Event-Driven** – Rich event hook system
-- **Type Safety** – Full TypeScript support
-- **Dependency Injection** – Cordis-based DI container
-- **Configuration Management** – Schema-driven config validation
-- **Lifecycle Management** – Complete plugin lifecycle support
+### Core Plugins
 
-#### Built-in Plugins
+The platform includes essential plugins for authentication, search, translation, speech synthesis, and more. Each plugin provides specific functionality while integrating seamlessly with the core system.
 
-| Plugin Name         | Description                      | Status              |
-| ------------------- | -------------------------------- | ------------------- |
-| `gooselang`         | Core service framework           | ✅ Fully implemented |
-| `ui-default`        | Default frontend UI              | ✅ Fully implemented |
-| `elastic`           | Elasticsearch integration        | ✅ Fully implemented |
-| `geoip`             | IP geolocation service           | ✅ Fully implemented |
-| `login-with-github` | GitHub OAuth authentication      | ✅ Fully implemented |
-| `login-with-google` | Google OAuth authentication      | ✅ Fully implemented |
-| `sonic`             | High-performance search engine   | ✅ Fully implemented |
-| `goosetranslator`   | Multilingual translation service | ✅ 80% implemented   |
-| `goosesynthesizer`  | Speech synthesis service         | ✅ Fully implemented |
-| `gooselangjudge`    | Programming exercise judge       | (Reference only)    |
-| `language-tool`     | Language tool integration        | (Test module)       |
+### Plugin Development
 
-#### Plugin Development Scaffold
-
-```typescript
-export default {
-  name: 'plugin-name',
-  schema: ConfigSchema,
-  apply: (ctx: Context, config: Config) => {
-    // Plugin implementation
-    ctx.on('event-name', handler);
-    ctx.command('command-name', handler);
-  }
-};
-```
-
-#### Plugin Management CLI
-
-```bash
-# Plugin management commands
-gooselang addon list              # List installed plugins
-gooselang addon add <name>        # Install a plugin
-gooselang addon remove <name>     # Remove a plugin
-gooselang addon create <name>     # Generate a plugin scaffold
-```
-
-#### Event Hook System
-
-Core events that plugins can listen for:
-
-- **Application Lifecycle**: `app/started`, `app/ready`, `app/exit`
-- **User Events**: `user/message`, `user/import/*`
-- **Learning Content**: `problem/add`, `problem/edit`, `problem/del`
-- **Course Management**: `contest/add`, `contest/edit`
-- **Record Tracking**: `record/change`, `record/judge`
-- **Translation Service**: `translation/change`
+For comprehensive information about plugin architecture, development guidelines, available plugins, CLI commands, and event systems, see the **[Plugin Summary](/dev/plugin-summary)** documentation.
 
 ---
 
