@@ -102,7 +102,7 @@ Frontend Data Flow:
 ### 🎯 Essential Components for Development
 
 #### 1. Form Components
-**Location**: `components/form/`
+**Location**: `/templates/components/form.html`
 
 Use the standardized [Input Form templates](/input-form):
 - **Text Input**: `form-text.md` - Standard text input fields
@@ -113,7 +113,7 @@ Use the standardized [Input Form templates](/input-form):
 - **Switch**: `form-switch.md` - Toggle switches
 
 #### 2. Media Components
-**Location**: `components/media/`
+**Location**: `/templates/components/media.html`
 
 Use the standardized [Media Form templates](/media-form):
 - **Image Handling**: `image.md` - Image upload and display

@@ -102,7 +102,7 @@ Frontend Data Flow:
 ### 🎯 Essential Components for Development
 
 #### 1. Form Components
-**Location**: `components/form/`
+**Location**: `/templates/components/form.html`
 
 Use the standardized [Input Form templates](/input-form):
 - **Text Input**: `form-text.md` - Standard text input fields
@@ -113,7 +113,7 @@ Use the standardized [Input Form templates](/input-form):
 - **Switch**: `form-switch.md` - Toggle switches
 
 #### 2. Media Components
-**Location**: `components/media/`
+**Location**: `/templates/components/media.html`
 
 Use the standardized [Media Form templates](/media-form):
 - **Image Handling**: `image.md` - Image upload and display
@@ -122,18 +122,11 @@ Use the standardized [Media Form templates](/media-form):
 - **Iconify Integration**: `iconify.md` - Icon system usage
 
 #### 3. Editor Components
-**Location**: `components/editor/`
+**Location**: `/components/editor/`
 
 - **Monaco Editor**: Advanced code/text editing with syntax highlighting
 - **Markdown Editor**: Rich text editing with live preview
 - **Emoji Support**: Integrated emoji picker and rendering
-
-#### 4. Interactive Components
-**Location**: `components/autocomplete/`
-
-- **AutoComplete System**: Powerful search and selection interface
-- **Drag & Drop**: Built-in sorting and reordering
-- **Async Data Loading**: Efficient data fetching and caching
 
 ---
 
