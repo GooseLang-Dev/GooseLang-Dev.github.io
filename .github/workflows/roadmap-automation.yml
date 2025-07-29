@@ -180,19 +180,18 @@ jobs:
           done
 
           # Update overdue items to "Delayed" status and move dates to current date
-          while IFS= read -r item; do
-            if [ -n "$item" ]; then
-              ITEM_ID=$(echo "$item" | jq -r '.item_id')
-              STATUS_FIELD_ID=$(echo "$item" | jq -r '.status_field_id')
-              DELAYED_OPTION_ID=$(echo "$item" | jq -r '.delayed_option_id')
-              DUE_DATE_FIELD_ID=$(echo "$item" | jq -r '.due_date_field_id')
-              START_DATE_FIELD_ID=$(echo "$item" | jq -r '.start_date_field_id')
-              TITLE=$(echo "$item" | jq -r '.title')
-              CURRENT_STATUS=$(echo "$item" | jq -r '.current_status')
+          OVERDUE_COUNT=$(jq length overdue_items.json)
+          echo "Found $OVERDUE_COUNT overdue items to update"
+          
+          if [ "$OVERDUE_COUNT" -gt 0 ]; then
+            PROJECT_ID="$(jq -r '.data.user.projectV2.id' project_data.json)"
+            
+            for i in $(seq 0 $((OVERDUE_COUNT-1))); do
+              ITEM_ID=$(jq -r ".[$i].item_id" overdue_items.json)
+              TITLE=$(jq -r ".[$i].title" overdue_items.json)
+              CURRENT_STATUS=$(jq -r ".[$i].current_status" overdue_items.json)
               
               echo "Updating item '$TITLE' (status: $CURRENT_STATUS) to Delayed status and moving dates to current date..."
-              
-              PROJECT_ID="$(jq -r '.data.user.projectV2.id' project_data.json)"
               
               # Update status to Delayed
               gh api graphql -f query='
@@ -215,8 +214,8 @@ jobs:
                 -f field_id="$STATUS_FIELD_ID" \
                 -f value="$DELAYED_OPTION_ID"
               
-              # Update start date to current date if it exists
-              if [ "$START_DATE_FIELD_ID" != "null" ]; then
+              # Update start date to current date if field exists
+              if [ "$START_DATE_FIELD_ID" != "null" ] && [ -n "$START_DATE_FIELD_ID" ]; then
                 echo "Updating start date to current date..."
                 gh api graphql -f query='
                   mutation($project_id: ID!, $item_id: ID!, $field_id: ID!, $value: Date!) {
@@ -239,8 +238,8 @@ jobs:
                   -f value="$CURRENT_DATE"
               fi
               
-              # Update due date to current date if it exists
-              if [ "$DUE_DATE_FIELD_ID" != "null" ]; then
+              # Update due date to current date if field exists
+              if [ "$DUE_DATE_FIELD_ID" != "null" ] && [ -n "$DUE_DATE_FIELD_ID" ]; then
                 echo "Updating due date to current date..."
                 gh api graphql -f query='
                   mutation($project_id: ID!, $item_id: ID!, $field_id: ID!, $value: Date!) {
@@ -262,8 +261,8 @@ jobs:
                   -f field_id="$DUE_DATE_FIELD_ID" \
                   -f value="$CURRENT_DATE"
               fi
-            fi
-          done < overdue_items.json
+            done
+          fi
 
           # Process Todo items with past start dates (keep as Todo, move dates proportionally)
           echo "Processing Todo items with past start dates..."
@@ -296,19 +295,20 @@ jobs:
           done
 
           # Update Todo items dates proportionally
-          while IFS= read -r item; do
-            if [ -n "$item" ]; then
-              ITEM_ID=$(echo "$item" | jq -r '.item_id')
-              DUE_DATE_FIELD_ID=$(echo "$item" | jq -r '.due_date_field_id')
-              START_DATE_FIELD_ID=$(echo "$item" | jq -r '.start_date_field_id')
-              TITLE=$(echo "$item" | jq -r '.title')
-              OLD_START_DATE=$(echo "$item" | jq -r '.start_date')
-              OLD_DUE_DATE=$(echo "$item" | jq -r '.due_date')
-              
-              PROJECT_ID="$(jq -r '.data.user.projectV2.id' project_data.json)"
+          TODO_COUNT=$(jq length todo_items.json)
+          echo "Found $TODO_COUNT Todo items to update"
+          
+          if [ "$TODO_COUNT" -gt 0 ]; then
+            PROJECT_ID="$(jq -r '.data.user.projectV2.id' project_data.json)"
+            
+            for i in $(seq 0 $((TODO_COUNT-1))); do
+              ITEM_ID=$(jq -r ".[$i].item_id" todo_items.json)
+              TITLE=$(jq -r ".[$i].title" todo_items.json)
+              OLD_START_DATE=$(jq -r ".[$i].start_date" todo_items.json)
+              OLD_DUE_DATE=$(jq -r ".[$i].due_date" todo_items.json)
               
               # Calculate days difference and new due date
-              if [ "$OLD_DUE_DATE" != "null" ] && [ -n "$OLD_DUE_DATE" ]; then
+              if [ "$OLD_DUE_DATE" != "null" ] && [ -n "$OLD_DUE_DATE" ] && [ "$OLD_DUE_DATE" != "" ]; then
                 DAYS_DIFF=$(( ($(date -d "$OLD_DUE_DATE" +%s) - $(date -d "$OLD_START_DATE" +%s)) / 86400 ))
                 NEW_DUE_DATE=$(date -d "$CURRENT_DATE + $DAYS_DIFF days" +%Y-%m-%d)
                 echo "Moving Todo item '$TITLE': start date to today, due date moved by $DAYS_DIFF days to $NEW_DUE_DATE"
@@ -318,7 +318,7 @@ jobs:
               fi
               
               # Update start date to current date
-              if [ "$START_DATE_FIELD_ID" != "null" ]; then
+              if [ "$START_DATE_FIELD_ID" != "null" ] && [ -n "$START_DATE_FIELD_ID" ]; then
                 gh api graphql -f query='
                   mutation($project_id: ID!, $item_id: ID!, $field_id: ID!, $value: Date!) {
                     updateProjectV2ItemFieldValue(input: {
@@ -341,7 +341,7 @@ jobs:
               fi
               
               # Update due date proportionally
-              if [ "$DUE_DATE_FIELD_ID" != "null" ]; then
+              if [ "$DUE_DATE_FIELD_ID" != "null" ] && [ -n "$DUE_DATE_FIELD_ID" ]; then
                 gh api graphql -f query='
                   mutation($project_id: ID!, $item_id: ID!, $field_id: ID!, $value: Date!) {
                     updateProjectV2ItemFieldValue(input: {
@@ -362,8 +362,8 @@ jobs:
                   -f field_id="$DUE_DATE_FIELD_ID" \
                   -f value="$NEW_DUE_DATE"
               fi
-            fi
-          done < todo_items.json
+            done
+          fi
 
           # Process in-progress items to extend due date to next business day
           echo "Processing In Progress items with past due dates..."
@@ -393,11 +393,15 @@ jobs:
           done
 
           # Update in-progress items due date to next business day
-          while IFS= read -r item; do
-            if [ -n "$item" ]; then
-              ITEM_ID=$(echo "$item" | jq -r '.item_id')
-              DUE_DATE_FIELD_ID=$(echo "$item" | jq -r '.due_date_field_id')
-              TITLE=$(echo "$item" | jq -r '.title')
+          INPROGRESS_COUNT=$(jq length inprogress_items.json)
+          echo "Found $INPROGRESS_COUNT In Progress items to update"
+          
+          if [ "$INPROGRESS_COUNT" -gt 0 ]; then
+            PROJECT_ID="$(jq -r '.data.user.projectV2.id' project_data.json)"
+            
+            for i in $(seq 0 $((INPROGRESS_COUNT-1))); do
+              ITEM_ID=$(jq -r ".[$i].item_id" inprogress_items.json)
+              TITLE=$(jq -r ".[$i].title" inprogress_items.json)
               
               # Calculate next business day (skip weekends)
               NEXT_DATE=$(date -d "$CURRENT_DATE + 1 day" +%Y-%m-%d)
@@ -413,27 +417,29 @@ jobs:
               echo "Extending due date for in-progress item '$TITLE' to next business day: $NEXT_DATE"
               
               # Update due date to next business day
-              gh api graphql -f query='
-                mutation($project_id: ID!, $item_id: ID!, $field_id: ID!, $value: Date!) {
-                  updateProjectV2ItemFieldValue(input: {
-                    projectId: $project_id
-                    itemId: $item_id
-                    fieldId: $field_id
-                    value: {
-                      date: $value
+              if [ "$DUE_DATE_FIELD_ID" != "null" ] && [ -n "$DUE_DATE_FIELD_ID" ]; then
+                gh api graphql -f query='
+                  mutation($project_id: ID!, $item_id: ID!, $field_id: ID!, $value: Date!) {
+                    updateProjectV2ItemFieldValue(input: {
+                      projectId: $project_id
+                      itemId: $item_id
+                      fieldId: $field_id
+                      value: {
+                        date: $value
+                      }
+                    }) {
+                      projectV2Item {
+                        id
+                      }
                     }
-                  }) {
-                    projectV2Item {
-                      id
-                    }
-                  }
-                }' \
-                -f project_id="$(jq -r '.data.user.projectV2.id' project_data.json)" \
-                -f item_id="$ITEM_ID" \
-                -f field_id="$DUE_DATE_FIELD_ID" \
-                -f value="$NEXT_DATE"
-            fi
-          done < inprogress_items.json
+                  }' \
+                  -f project_id="$PROJECT_ID" \
+                  -f item_id="$ITEM_ID" \
+                  -f field_id="$DUE_DATE_FIELD_ID" \
+                  -f value="$NEXT_DATE"
+              fi
+            done
+          fi
 
           # Clean up temporary files
           rm -f project_data.json overdue_items.json todo_items.json inprogress_items.json
