@@ -21,7 +21,7 @@ jobs:
           # GraphQL query to get project items with due dates
           QUERY='
           query($owner: String!, $number: Int!) {
-            organization(login: $owner) {
+            user(login: $owner) {
               projectV2(number: $number) {
                 id
                 items(first: 100) {
@@ -144,7 +144,7 @@ jobs:
                     }
                   }
                 }' \
-                -f project_id="$(echo "$RESPONSE" | jq -r '.data.organization.projectV2.id')" \
+                -f project_id="$(echo "$RESPONSE" | jq -r '.data.user.projectV2.id')" \
                 -f item_id="$ITEM_ID" \
                 -f field_id="$STATUS_FIELD_ID" \
                 -f value="$DELAYED_OPTION_ID"
@@ -195,7 +195,7 @@ jobs:
                     }
                   }
                 }' \
-                -f project_id="$(echo "$RESPONSE" | jq -r '.data.organization.projectV2.id')" \
+                -f project_id="$(echo "$RESPONSE" | jq -r '.data.user.projectV2.id')" \
                 -f item_id="$ITEM_ID" \
                 -f field_id="$DUE_DATE_FIELD_ID" \
                 -f value="$CURRENT_DATE"
