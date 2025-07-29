@@ -91,22 +91,31 @@ jobs:
           
           # Execute GraphQL query
           echo "Querying project for owner: ${GITHUB_REPOSITORY_OWNER}, project number: ${PROJECT_NUMBER}"
-          RESPONSE=$(gh api graphql -f query="$QUERY" -f owner="${GITHUB_REPOSITORY_OWNER}" -F number="${PROJECT_NUMBER}")
           
-          echo "GraphQL Response:"
-          echo "$RESPONSE"
+          # Save response directly to file to avoid shell variable truncation
+          gh api graphql -f query="$QUERY" -f owner="${GITHUB_REPOSITORY_OWNER}" -F number="${PROJECT_NUMBER}" > project_data.json
           
-          # Check if query was successful
-          if echo "$RESPONSE" | jq -e '.data.user.projectV2' > /dev/null; then
-            echo "Project found successfully"
-          else
-            echo "Error: Project not found or query failed"
-            echo "Response data:"
-            echo "$RESPONSE" | jq '.'
+          # Validate JSON structure
+          if ! jq empty project_data.json 2>/dev/null; then
+            echo "Error: Invalid JSON response received"
+            echo "Response (first 1000 chars):"
+            head -c 1000 project_data.json
+            echo "..."
+            echo "Response (last 1000 chars):"
+            tail -c 1000 project_data.json
             exit 1
           fi
           
-          echo "$RESPONSE" > project_data.json
+          # Check if query was successful
+          if jq -e '.data.user.projectV2' project_data.json > /dev/null; then
+            echo "Project found successfully"
+            echo "Found $(jq '.data.user.projectV2.items.nodes | length' project_data.json) items"
+          else
+            echo "Error: Project not found or query failed"
+            echo "Response data:"
+            jq '.' project_data.json
+            exit 1
+          fi
           
           # Process the data with jq to identify overdue items
           jq -r '
@@ -149,7 +158,7 @@ jobs:
               
               echo "Updating item '$TITLE' (status: $CURRENT_STATUS) to Delayed status and moving dates to current date..."
               
-              PROJECT_ID="$(echo "$RESPONSE" | jq -r '.data.user.projectV2.id')"
+              PROJECT_ID="$(jq -r '.data.user.projectV2.id' project_data.json)"
               
               # Update status to Delayed
               gh api graphql -f query='
@@ -255,7 +264,7 @@ jobs:
               OLD_START_DATE=$(echo "$item" | jq -r '.start_date')
               OLD_DUE_DATE=$(echo "$item" | jq -r '.due_date')
               
-              PROJECT_ID="$(echo "$RESPONSE" | jq -r '.data.user.projectV2.id')"
+              PROJECT_ID="$(jq -r '.data.user.projectV2.id' project_data.json)"
               
               # Calculate days difference and new due date
               if [ "$OLD_DUE_DATE" != "null" ] && [ -n "$OLD_DUE_DATE" ]; then
@@ -370,7 +379,7 @@ jobs:
                     }
                   }
                 }' \
-                -f project_id="$(echo "$RESPONSE" | jq -r '.data.user.projectV2.id')" \
+                -f project_id="$(jq -r '.data.user.projectV2.id' project_data.json)" \
                 -f item_id="$ITEM_ID" \
                 -f field_id="$DUE_DATE_FIELD_ID" \
                 -f value="$NEXT_DATE"
