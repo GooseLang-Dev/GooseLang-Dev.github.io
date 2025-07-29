@@ -95,6 +95,10 @@ jobs:
           # Save response directly to file to avoid shell variable truncation
           gh api graphql -f query="$QUERY" -f owner="${GITHUB_REPOSITORY_OWNER}" -F number="${PROJECT_NUMBER}" > project_data.json
           
+          # Debug: Show file size and structure
+          echo "JSON file size: $(wc -c < project_data.json) bytes"
+          echo "JSON file lines: $(wc -l < project_data.json) lines"
+          
           # Validate JSON structure
           if ! jq empty project_data.json 2>/dev/null; then
             echo "Error: Invalid JSON response received"
@@ -117,23 +121,52 @@ jobs:
             exit 1
           fi
           
-          # Process the data with jq to identify overdue items
-          jq -r '
-            .data.user.projectV2 as $project |
-            $project.fields.nodes as $fields |
-            ($fields[] | select(.name == "Status") | .id) as $status_field_id |
-            ($fields[] | select(.name == "Status") | .options[]? | select(.name == "Delayed") | .id) as $delayed_option_id |
-            ($fields[] | select(.name == "Due Date") | .id) as $due_date_field_id |
-            ($fields[] | select(.name == "Start Date") | .id) as $start_date_field_id |
-            $project.items.nodes[] |
-            . as $item |
-            ($item.fieldValues.nodes[] | select(.field.name == "Due Date") | .date) as $due_date |
-            ($item.fieldValues.nodes[] | select(.field.name == "Start Date") | .date) as $start_date |
-            ($item.fieldValues.nodes[] | select(.field.name == "Status") | .name) as $status |
-            if ($due_date and $due_date < "'$CURRENT_DATE'" and $status != "Done" and $status != "Delayed" and $status != "Todo") then
-              {
-                item_id: $item.id,
-                title: ($item.content.title // "Draft"),
+          # Debug: Test the specific jq command that's failing
+          echo "Testing jq processing..."
+          if ! jq -r '.data.user.projectV2 as $project | $project.fields.nodes as $fields | "Debug: Found fields"' project_data.json > /dev/null 2>&1; then
+            echo "Error: jq processing failed on project data"
+            echo "Showing problematic JSON structure:"
+            jq '.data.user.projectV2.fields' project_data.json || echo "Failed to show fields"
+            exit 1
+          fi
+          
+          # Extract field IDs first to avoid complex jq processing
+          echo "Extracting field information..."
+          
+          STATUS_FIELD_ID=$(jq -r '.data.user.projectV2.fields.nodes[] | select(.name == "Status") | .id' project_data.json)
+          DELAYED_OPTION_ID=$(jq -r '.data.user.projectV2.fields.nodes[] | select(.name == "Status") | .options[]? | select(.name == "Delayed") | .id' project_data.json)
+          DUE_DATE_FIELD_ID=$(jq -r '.data.user.projectV2.fields.nodes[] | select(.name == "Due Date") | .id' project_data.json)
+          START_DATE_FIELD_ID=$(jq -r '.data.user.projectV2.fields.nodes[] | select(.name == "Start Date") | .id' project_data.json)
+          
+          echo "Field IDs - Status: $STATUS_FIELD_ID, Delayed: $DELAYED_OPTION_ID, Due Date: $DUE_DATE_FIELD_ID, Start Date: $START_DATE_FIELD_ID"
+          
+          # Process items one by one to avoid complex jq
+          echo "Processing project items..."
+          echo "[]" > overdue_items.json
+          
+          # Get number of items
+          ITEM_COUNT=$(jq '.data.user.projectV2.items.nodes | length' project_data.json)
+          echo "Processing $ITEM_COUNT items..."
+          
+          # Process each item individually
+          for i in $(seq 0 $((ITEM_COUNT-1))); do
+            ITEM_DATA=$(jq ".data.user.projectV2.items.nodes[$i]" project_data.json)
+            ITEM_ID=$(echo "$ITEM_DATA" | jq -r '.id')
+            TITLE=$(echo "$ITEM_DATA" | jq -r '.content.title // "Draft"')
+            
+            # Extract field values
+            DUE_DATE=$(echo "$ITEM_DATA" | jq -r '.fieldValues.nodes[] | select(.field.name == "Due Date") | .date // empty')
+            START_DATE=$(echo "$ITEM_DATA" | jq -r '.fieldValues.nodes[] | select(.field.name == "Start Date") | .date // empty')
+            STATUS=$(echo "$ITEM_DATA" | jq -r '.fieldValues.nodes[] | select(.field.name == "Status") | .name // empty')
+            
+            echo "Item $((i+1)): '$TITLE' - Status: $STATUS, Due: $DUE_DATE, Start: $START_DATE"
+            
+            # Check if item should be marked as delayed
+            if [[ -n "$DUE_DATE" && "$DUE_DATE" < "$CURRENT_DATE" && "$STATUS" != "Done" && "$STATUS" != "Delayed" && "$STATUS" != "Todo" ]]; then
+              echo "  -> Adding to overdue items (due date passed)"
+              NEW_ITEM=$(jq -n --arg item_id "$ITEM_ID" --arg title "$TITLE" --arg due_date "$DUE_DATE" --arg start_date "$START_DATE" --arg status "$STATUS" --arg status_field_id "$STATUS_FIELD_ID" --arg delayed_option_id "$DELAYED_OPTION_ID" --arg due_date_field_id "$DUE_DATE_FIELD_ID" --arg start_date_field_id "$START_DATE_FIELD_ID" '{
+                item_id: $item_id,
+                title: $title,
                 due_date: $due_date,
                 start_date: $start_date,
                 current_status: $status,
@@ -141,9 +174,10 @@ jobs:
                 delayed_option_id: $delayed_option_id,
                 due_date_field_id: $due_date_field_id,
                 start_date_field_id: $start_date_field_id
-              }
-            else empty end
-          ' project_data.json > overdue_items.json
+              }')
+              jq ". += [$NEW_ITEM]" overdue_items.json > temp.json && mv temp.json overdue_items.json
+            fi
+          done
 
           # Update overdue items to "Delayed" status and move dates to current date
           while IFS= read -r item; do
@@ -232,27 +266,34 @@ jobs:
           done < overdue_items.json
 
           # Process Todo items with past start dates (keep as Todo, move dates proportionally)
-          jq -r '
-            .data.user.projectV2 as $project |
-            $project.fields.nodes as $fields |
-            ($fields[] | select(.name == "Due Date") | .id) as $due_date_field_id |
-            ($fields[] | select(.name == "Start Date") | .id) as $start_date_field_id |
-            $project.items.nodes[] |
-            . as $item |
-            ($item.fieldValues.nodes[] | select(.field.name == "Due Date") | .date) as $due_date |
-            ($item.fieldValues.nodes[] | select(.field.name == "Start Date") | .date) as $start_date |
-            ($item.fieldValues.nodes[] | select(.field.name == "Status") | .name) as $status |
-            if ($start_date and $start_date < "'$CURRENT_DATE'" and $status == "Todo") then
-              {
-                item_id: $item.id,
-                title: ($item.content.title // "Draft"),
+          echo "Processing Todo items with past start dates..."
+          echo "[]" > todo_items.json
+          
+          # Process each item individually for Todo items
+          for i in $(seq 0 $((ITEM_COUNT-1))); do
+            ITEM_DATA=$(jq ".data.user.projectV2.items.nodes[$i]" project_data.json)
+            ITEM_ID=$(echo "$ITEM_DATA" | jq -r '.id')
+            TITLE=$(echo "$ITEM_DATA" | jq -r '.content.title // "Draft"')
+            
+            # Extract field values
+            DUE_DATE=$(echo "$ITEM_DATA" | jq -r '.fieldValues.nodes[] | select(.field.name == "Due Date") | .date // empty')
+            START_DATE=$(echo "$ITEM_DATA" | jq -r '.fieldValues.nodes[] | select(.field.name == "Start Date") | .date // empty')
+            STATUS=$(echo "$ITEM_DATA" | jq -r '.fieldValues.nodes[] | select(.field.name == "Status") | .name // empty')
+            
+            # Check if Todo item with past start date
+            if [[ -n "$START_DATE" && "$START_DATE" < "$CURRENT_DATE" && "$STATUS" == "Todo" ]]; then
+              echo "  -> Adding Todo item '$TITLE' with past start date"
+              NEW_ITEM=$(jq -n --arg item_id "$ITEM_ID" --arg title "$TITLE" --arg due_date "$DUE_DATE" --arg start_date "$START_DATE" --arg due_date_field_id "$DUE_DATE_FIELD_ID" --arg start_date_field_id "$START_DATE_FIELD_ID" '{
+                item_id: $item_id,
+                title: $title,
                 due_date: $due_date,
                 start_date: $start_date,
                 due_date_field_id: $due_date_field_id,
                 start_date_field_id: $start_date_field_id
-              }
-            else empty end
-          ' project_data.json > todo_items.json
+              }')
+              jq ". += [$NEW_ITEM]" todo_items.json > temp.json && mv temp.json todo_items.json
+            fi
+          done
 
           # Update Todo items dates proportionally
           while IFS= read -r item; do
@@ -325,23 +366,31 @@ jobs:
           done < todo_items.json
 
           # Process in-progress items to extend due date to next business day
-          jq -r '
-            .data.user.projectV2 as $project |
-            $project.fields.nodes as $fields |
-            ($fields[] | select(.name == "Due Date") | .id) as $due_date_field_id |
-            $project.items.nodes[] |
-            . as $item |
-            ($item.fieldValues.nodes[] | select(.field.name == "Due Date") | .date) as $due_date |
-            ($item.fieldValues.nodes[] | select(.field.name == "Status") | .name) as $status |
-            if ($due_date and $due_date < "'$CURRENT_DATE'" and $status == "In Progress") then
-              {
-                item_id: $item.id,
-                title: ($item.content.title // "Draft"),
+          echo "Processing In Progress items with past due dates..."
+          echo "[]" > inprogress_items.json
+          
+          # Process each item individually for In Progress items
+          for i in $(seq 0 $((ITEM_COUNT-1))); do
+            ITEM_DATA=$(jq ".data.user.projectV2.items.nodes[$i]" project_data.json)
+            ITEM_ID=$(echo "$ITEM_DATA" | jq -r '.id')
+            TITLE=$(echo "$ITEM_DATA" | jq -r '.content.title // "Draft"')
+            
+            # Extract field values
+            DUE_DATE=$(echo "$ITEM_DATA" | jq -r '.fieldValues.nodes[] | select(.field.name == "Due Date") | .date // empty')
+            STATUS=$(echo "$ITEM_DATA" | jq -r '.fieldValues.nodes[] | select(.field.name == "Status") | .name // empty')
+            
+            # Check if In Progress item with past due date
+            if [[ -n "$DUE_DATE" && "$DUE_DATE" < "$CURRENT_DATE" && "$STATUS" == "In Progress" ]]; then
+              echo "  -> Adding In Progress item '$TITLE' with past due date"
+              NEW_ITEM=$(jq -n --arg item_id "$ITEM_ID" --arg title "$TITLE" --arg due_date "$DUE_DATE" --arg due_date_field_id "$DUE_DATE_FIELD_ID" '{
+                item_id: $item_id,
+                title: $title,
                 due_date: $due_date,
                 due_date_field_id: $due_date_field_id
-              }
-            else empty end
-          ' project_data.json > inprogress_items.json
+              }')
+              jq ". += [$NEW_ITEM]" inprogress_items.json > temp.json && mv temp.json inprogress_items.json
+            fi
+          done
 
           # Update in-progress items due date to next business day
           while IFS= read -r item; do
