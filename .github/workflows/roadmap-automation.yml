@@ -90,13 +90,27 @@ jobs:
           CURRENT_DATE=$(date +%Y-%m-%d)
           
           # Execute GraphQL query
+          echo "Querying project for owner: ${GITHUB_REPOSITORY_OWNER}, project number: ${PROJECT_NUMBER}"
           RESPONSE=$(gh api graphql -f query="$QUERY" -f owner="${GITHUB_REPOSITORY_OWNER}" -F number="${PROJECT_NUMBER}")
+          
+          echo "GraphQL Response:"
+          echo "$RESPONSE"
+          
+          # Check if query was successful
+          if echo "$RESPONSE" | jq -e '.data.user.projectV2' > /dev/null; then
+            echo "Project found successfully"
+          else
+            echo "Error: Project not found or query failed"
+            echo "Response data:"
+            echo "$RESPONSE" | jq '.'
+            exit 1
+          fi
           
           echo "$RESPONSE" > project_data.json
           
           # Process the data with jq to identify overdue items
           jq -r '
-            .data.organization.projectV2 as $project |
+            .data.user.projectV2 as $project |
             $project.fields.nodes as $fields |
             ($fields[] | select(.name == "Status") | .id) as $status_field_id |
             ($fields[] | select(.name == "Status") | .options[]? | select(.name == "Delayed") | .id) as $delayed_option_id |
@@ -153,7 +167,7 @@ jobs:
 
           # Process in-progress items to extend due date
           jq -r '
-            .data.organization.projectV2 as $project |
+            .data.user.projectV2 as $project |
             $project.fields.nodes as $fields |
             ($fields[] | select(.name == "Due Date") | .id) as $due_date_field_id |
             $project.items.nodes[] |
