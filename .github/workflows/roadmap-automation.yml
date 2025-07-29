@@ -1,0 +1,208 @@
+name: Roadmap Automation
+
+on:
+  schedule:
+    # Run daily at 9 AM UTC
+    - cron: '0 9 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  update-roadmap:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Update roadmap todos
+        env:
+          GITHUB_TOKEN: ${{ secrets.ROADMAP_PAT }}
+          PROJECT_NUMBER: ${{ vars.PROJECT_NUMBER }}
+        run: |
+          # GraphQL query to get project items with due dates
+          QUERY='
+          query($owner: String!, $number: Int!) {
+            organization(login: $owner) {
+              projectV2(number: $number) {
+                id
+                items(first: 100) {
+                  nodes {
+                    id
+                    fieldValues(first: 20) {
+                      nodes {
+                        ... on ProjectV2ItemFieldTextValue {
+                          text
+                          field {
+                            ... on ProjectV2FieldCommon {
+                              name
+                            }
+                          }
+                        }
+                        ... on ProjectV2ItemFieldDateValue {
+                          date
+                          field {
+                            ... on ProjectV2FieldCommon {
+                              name
+                            }
+                          }
+                        }
+                        ... on ProjectV2ItemFieldSingleSelectValue {
+                          name
+                          field {
+                            ... on ProjectV2FieldCommon {
+                              name
+                            }
+                          }
+                        }
+                      }
+                    }
+                    content {
+                      ... on Issue {
+                        title
+                        number
+                      }
+                      ... on DraftIssue {
+                        title
+                      }
+                    }
+                  }
+                }
+                fields(first: 20) {
+                  nodes {
+                    ... on ProjectV2Field {
+                      id
+                      name
+                    }
+                    ... on ProjectV2SingleSelectField {
+                      id
+                      name
+                      options {
+                        id
+                        name
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }'
+
+          # Get current date
+          CURRENT_DATE=$(date +%Y-%m-%d)
+          
+          # Execute GraphQL query
+          RESPONSE=$(gh api graphql -f query="$QUERY" -f owner="${GITHUB_REPOSITORY_OWNER}" -F number="${PROJECT_NUMBER}")
+          
+          echo "$RESPONSE" > project_data.json
+          
+          # Process the data with jq to identify overdue items
+          jq -r '
+            .data.organization.projectV2 as $project |
+            $project.fields.nodes as $fields |
+            ($fields[] | select(.name == "Status") | .id) as $status_field_id |
+            ($fields[] | select(.name == "Status") | .options[]? | select(.name == "Delayed") | .id) as $delayed_option_id |
+            ($fields[] | select(.name == "Due Date") | .id) as $due_date_field_id |
+            $project.items.nodes[] |
+            . as $item |
+            ($item.fieldValues.nodes[] | select(.field.name == "Due Date") | .date) as $due_date |
+            ($item.fieldValues.nodes[] | select(.field.name == "Status") | .name) as $status |
+            if ($due_date and $due_date < "'$CURRENT_DATE'" and $status != "Done" and $status != "Delayed") then
+              {
+                item_id: $item.id,
+                title: ($item.content.title // "Draft"),
+                due_date: $due_date,
+                current_status: $status,
+                status_field_id: $status_field_id,
+                delayed_option_id: $delayed_option_id,
+                due_date_field_id: $due_date_field_id
+              }
+            else empty end
+          ' project_data.json > overdue_items.json
+
+          # Update overdue items to "Delayed" status
+          while IFS= read -r item; do
+            if [ -n "$item" ]; then
+              ITEM_ID=$(echo "$item" | jq -r '.item_id')
+              STATUS_FIELD_ID=$(echo "$item" | jq -r '.status_field_id')
+              DELAYED_OPTION_ID=$(echo "$item" | jq -r '.delayed_option_id')
+              TITLE=$(echo "$item" | jq -r '.title')
+              
+              echo "Updating item '$TITLE' to Delayed status..."
+              
+              # Update status to Delayed
+              gh api graphql -f query='
+                mutation($project_id: ID!, $item_id: ID!, $field_id: ID!, $value: String!) {
+                  updateProjectV2ItemFieldValue(input: {
+                    projectId: $project_id
+                    itemId: $item_id
+                    fieldId: $field_id
+                    value: {
+                      singleSelectOptionId: $value
+                    }
+                  }) {
+                    projectV2Item {
+                      id
+                    }
+                  }
+                }' \
+                -f project_id="$(echo "$RESPONSE" | jq -r '.data.organization.projectV2.id')" \
+                -f item_id="$ITEM_ID" \
+                -f field_id="$STATUS_FIELD_ID" \
+                -f value="$DELAYED_OPTION_ID"
+            fi
+          done < overdue_items.json
+
+          # Process in-progress items to extend due date
+          jq -r '
+            .data.organization.projectV2 as $project |
+            $project.fields.nodes as $fields |
+            ($fields[] | select(.name == "Due Date") | .id) as $due_date_field_id |
+            $project.items.nodes[] |
+            . as $item |
+            ($item.fieldValues.nodes[] | select(.field.name == "Due Date") | .date) as $due_date |
+            ($item.fieldValues.nodes[] | select(.field.name == "Status") | .name) as $status |
+            if ($due_date and $due_date < "'$CURRENT_DATE'" and $status == "In Progress") then
+              {
+                item_id: $item.id,
+                title: ($item.content.title // "Draft"),
+                due_date: $due_date,
+                due_date_field_id: $due_date_field_id
+              }
+            else empty end
+          ' project_data.json > inprogress_items.json
+
+          # Update in-progress items due date to current date
+          while IFS= read -r item; do
+            if [ -n "$item" ]; then
+              ITEM_ID=$(echo "$item" | jq -r '.item_id')
+              DUE_DATE_FIELD_ID=$(echo "$item" | jq -r '.due_date_field_id')
+              TITLE=$(echo "$item" | jq -r '.title')
+              
+              echo "Extending due date for in-progress item '$TITLE' to current date..."
+              
+              # Update due date to current date
+              gh api graphql -f query='
+                mutation($project_id: ID!, $item_id: ID!, $field_id: ID!, $value: Date!) {
+                  updateProjectV2ItemFieldValue(input: {
+                    projectId: $project_id
+                    itemId: $item_id
+                    fieldId: $field_id
+                    value: {
+                      date: $value
+                    }
+                  }) {
+                    projectV2Item {
+                      id
+                    }
+                  }
+                }' \
+                -f project_id="$(echo "$RESPONSE" | jq -r '.data.organization.projectV2.id')" \
+                -f item_id="$ITEM_ID" \
+                -f field_id="$DUE_DATE_FIELD_ID" \
+                -f value="$CURRENT_DATE"
+            fi
+          done < inprogress_items.json
+
+          # Clean up temporary files
+          rm -f project_data.json overdue_items.json inprogress_items.json
+
+          echo "Roadmap automation completed successfully!"
