@@ -161,9 +161,9 @@ jobs:
             
             echo "Item $((i+1)): '$TITLE' - Status: $STATUS, Due: $DUE_DATE, Start: $START_DATE"
             
-            # Check if item should be marked as delayed
+            # Check if item should be marked as delayed (excluding In Progress, Todo, Done, Delayed)
             if [[ -n "$DUE_DATE" && "$DUE_DATE" < "$CURRENT_DATE" && "$STATUS" != "Done" && "$STATUS" != "Delayed" && "$STATUS" != "Todo" && "$STATUS" != "In Progress" ]]; then
-              echo "  -> Adding to overdue items (due date passed)"
+              echo "  -> Adding to overdue items (due date passed, status: $STATUS)"
               NEW_ITEM=$(jq -n --arg item_id "$ITEM_ID" --arg title "$TITLE" --arg due_date "$DUE_DATE" --arg start_date "$START_DATE" --arg status "$STATUS" --arg status_field_id "$STATUS_FIELD_ID" --arg delayed_option_id "$DELAYED_OPTION_ID" --arg due_date_field_id "$DUE_DATE_FIELD_ID" --arg start_date_field_id "$START_DATE_FIELD_ID" '{
                 item_id: $item_id,
                 title: $title,
