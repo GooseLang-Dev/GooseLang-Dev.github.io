@@ -162,7 +162,7 @@ jobs:
             echo "Item $((i+1)): '$TITLE' - Status: $STATUS, Due: $DUE_DATE, Start: $START_DATE"
             
             # Check if item should be marked as delayed
-            if [[ -n "$DUE_DATE" && "$DUE_DATE" < "$CURRENT_DATE" && "$STATUS" != "Done" && "$STATUS" != "Delayed" && "$STATUS" != "Todo" ]]; then
+            if [[ -n "$DUE_DATE" && "$DUE_DATE" < "$CURRENT_DATE" && "$STATUS" != "Done" && "$STATUS" != "Delayed" && "$STATUS" != "Todo" && "$STATUS" != "In Progress" ]]; then
               echo "  -> Adding to overdue items (due date passed)"
               NEW_ITEM=$(jq -n --arg item_id "$ITEM_ID" --arg title "$TITLE" --arg due_date "$DUE_DATE" --arg start_date "$START_DATE" --arg status "$STATUS" --arg status_field_id "$STATUS_FIELD_ID" --arg delayed_option_id "$DELAYED_OPTION_ID" --arg due_date_field_id "$DUE_DATE_FIELD_ID" --arg start_date_field_id "$START_DATE_FIELD_ID" '{
                 item_id: $item_id,
@@ -281,12 +281,14 @@ jobs:
             
             # Check if Todo item with past start date
             if [[ -n "$START_DATE" && "$START_DATE" < "$CURRENT_DATE" && "$STATUS" == "Todo" ]]; then
-              echo "  -> Adding Todo item '$TITLE' with past start date"
-              NEW_ITEM=$(jq -n --arg item_id "$ITEM_ID" --arg title "$TITLE" --arg due_date "$DUE_DATE" --arg start_date "$START_DATE" --arg due_date_field_id "$DUE_DATE_FIELD_ID" --arg start_date_field_id "$START_DATE_FIELD_ID" '{
+              echo "  -> Adding Todo item '$TITLE' with past start date (will change to Delayed)"
+              NEW_ITEM=$(jq -n --arg item_id "$ITEM_ID" --arg title "$TITLE" --arg due_date "$DUE_DATE" --arg start_date "$START_DATE" --arg status_field_id "$STATUS_FIELD_ID" --arg delayed_option_id "$DELAYED_OPTION_ID" --arg due_date_field_id "$DUE_DATE_FIELD_ID" --arg start_date_field_id "$START_DATE_FIELD_ID" '{
                 item_id: $item_id,
                 title: $title,
                 due_date: $due_date,
                 start_date: $start_date,
+                status_field_id: $status_field_id,
+                delayed_option_id: $delayed_option_id,
                 due_date_field_id: $due_date_field_id,
                 start_date_field_id: $start_date_field_id
               }')
@@ -294,7 +296,7 @@ jobs:
             fi
           done
 
-          # Update Todo items dates proportionally
+          # Update Todo items to Delayed status and move dates proportionally
           TODO_COUNT=$(jq length todo_items.json)
           echo "Found $TODO_COUNT Todo items to update"
           
@@ -306,6 +308,29 @@ jobs:
               TITLE=$(jq -r ".[$i].title" todo_items.json)
               OLD_START_DATE=$(jq -r ".[$i].start_date" todo_items.json)
               OLD_DUE_DATE=$(jq -r ".[$i].due_date" todo_items.json)
+              
+              echo "Updating Todo item '$TITLE' to Delayed status and moving dates proportionally..."
+              
+              # Update status to Delayed first
+              gh api graphql -f query='
+                mutation($project_id: ID!, $item_id: ID!, $field_id: ID!, $value: String!) {
+                  updateProjectV2ItemFieldValue(input: {
+                    projectId: $project_id
+                    itemId: $item_id
+                    fieldId: $field_id
+                    value: {
+                      singleSelectOptionId: $value
+                    }
+                  }) {
+                    projectV2Item {
+                      id
+                    }
+                  }
+                }' \
+                -f project_id="$PROJECT_ID" \
+                -f item_id="$ITEM_ID" \
+                -f field_id="$STATUS_FIELD_ID" \
+                -f value="$DELAYED_OPTION_ID"
               
               # Calculate days difference and new due date
               if [ "$OLD_DUE_DATE" != "null" ] && [ -n "$OLD_DUE_DATE" ] && [ "$OLD_DUE_DATE" != "" ]; then
