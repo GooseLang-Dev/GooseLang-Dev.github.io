@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en-GB" dir="ltr" class="docs-wrapper plugin-docs plugin-id-guide docs-version-current docs-doc-page docs-doc-id-plugin/goosenlp-user-guide" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.8.1">
+<title data-rh="true">GooseNLP User Guide | GooseLang Documentation</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://gooselang.github.io/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://gooselang.github.io/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://gooselang.github.io/guide/plugin/goosenlp-user-guide"><meta data-rh="true" property="og:locale" content="en_GB"><meta data-rh="true" property="og:locale:alternate" content="zh_Hans"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-guide-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-guide-current"><meta data-rh="true" property="og:title" content="GooseNLP User Guide | GooseLang Documentation"><meta data-rh="true" name="description" content="Table of Contents"><meta data-rh="true" property="og:description" content="Table of Contents"><link data-rh="true" rel="icon" href="/img/goose.ico"><link data-rh="true" rel="canonical" href="https://gooselang.github.io/guide/plugin/goosenlp-user-guide"><link data-rh="true" rel="alternate" href="https://gooselang.github.io/guide/plugin/goosenlp-user-guide" hreflang="en-GB"><link data-rh="true" rel="alternate" href="https://gooselang.github.io/zh/guide/plugin/goosenlp-user-guide" hreflang="zh-Hans"><link data-rh="true" rel="alternate" href="https://gooselang.github.io/guide/plugin/goosenlp-user-guide" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Plugins","item":"https://gooselang.github.io/guide/category/plugins"},{"@type":"ListItem","position":2,"name":"GooseNLP User Guide","item":"https://gooselang.github.io/guide/plugin/goosenlp-user-guide"}]}</script><link rel="stylesheet" href="/assets/css/styles.7ec98850.css">
+<script src="/assets/js/runtime~main.b7fa0206.js" defer="defer"></script>
+<script src="/assets/js/main.db5ec86a.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")),document.documentElement.setAttribute("data-theme-choice",t||"system")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/img/goose.png"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/"><div class="navbar__logo"><img src="/img/goose.png" alt="My Site Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/img/goose.png" alt="My Site Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">GooseLang</b></a><a class="navbar__item navbar__link" href="/dev/intro">Documentation</a><a class="navbar__item navbar__link" href="/guide/intro">User Guide</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="navbar__item dropdown dropdown--hoverable dropdown--right"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" class="iconLanguage_nlXk"><path fill="currentColor" d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"></path></svg>English</a><ul class="dropdown__menu"><li><a href="/guide/plugin/goosenlp-user-guide" target="_self" rel="noopener noreferrer" class="dropdown__link dropdown__link--active" lang="en-GB">English</a></li><li><a href="/zh/guide/plugin/goosenlp-user-guide" target="_self" rel="noopener noreferrer" class="dropdown__link" lang="zh-Hans">简体中文</a></li></ul></div><a href="https://github.com/GooseLang-Dev/GooseLang-Dev.github.io" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="-5 -5 30 30"><path fill="currentColor" d="M12 1C5.923 1 1 5.923 1 12c0 4.867 3.149 8.979 7.521 10.436c.55.096.756-.233.756-.522c0-.262-.013-1.128-.013-2.049c-2.764.509-3.479-.674-3.699-1.292c-.124-.317-.66-1.293-1.127-1.554c-.385-.207-.936-.715-.014-.729c.866-.014 1.485.797 1.691 1.128c.99 1.663 2.571 1.196 3.204.907c.096-.715.385-1.196.701-1.471c-2.448-.275-5.005-1.224-5.005-5.432c0-1.196.426-2.186 1.128-2.956c-.111-.275-.496-1.402.11-2.915c0 0 .921-.288 3.024 1.128a10.2 10.2 0 0 1 2.75-.371c.936 0 1.871.123 2.75.371c2.104-1.43 3.025-1.128 3.025-1.128c.605 1.513.221 2.64.111 2.915c.701.77 1.127 1.747 1.127 2.956c0 4.222-2.571 5.157-5.019 5.432c.399.344.743 1.004.743 2.035c0 1.471-.014 2.654-.014 3.025c0 .289.206.632.756.522C19.851 20.979 23 16.854 23 12c0-6.077-4.922-11-11-11"/></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"><div class="navbar__search searchBarContainer_NW3z" dir="ltr"><input placeholder="Search" aria-label="Search" class="navbar__search-input searchInput_YFbd" value=""><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--active" href="/guide/category/plugins">Plugins</a><button aria-label="Collapse sidebar category &#x27;Plugins&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/guide/plugin/goosenlp-user-guide">GooseNLP User Guide</a></li></ul></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/guide/intro">Getting Started with GooseLang</a></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><a class="breadcrumbs__link" href="/guide/category/plugins"><span>Plugins</span></a></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">GooseNLP User Guide</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>GooseNLP User Guide</h1></header>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="table-of-contents">Table of Contents<a href="#table-of-contents" class="hash-link" aria-label="Direct link to Table of Contents" title="Direct link to Table of Contents">​</a></h2>
+<ol>
+<li><a href="#quick-start">Quick Start</a></li>
+<li><a href="#installation--deployment">Installation &amp; Deployment</a></li>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#usage-flow">Usage Flow</a></li>
+<li><a href="#features">Features</a></li>
+<li><a href="#faq">FAQ</a></li>
+<li><a href="#important-notes">Important Notes</a></li>
+</ol>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="quick-start">Quick Start<a href="#quick-start" class="hash-link" aria-label="Direct link to Quick Start" title="Direct link to Quick Start">​</a></h2>
+<p>GooseNLP is a natural language processing plugin for the GooseLang system, providing part-of-speech tagging, named entity recognition, and other features for text materials.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="main-features">Main Features<a href="#main-features" class="hash-link" aria-label="Direct link to Main Features" title="Direct link to Main Features">​</a></h3>
+<ul>
+<li>🏷️ <strong>Part-of-Speech Tagging</strong>: Identify nouns, verbs, adjectives, etc.</li>
+<li>🔍 <strong>Named Entity Recognition</strong>: Identify person names, locations, organizations, etc.</li>
+<li>🌐 <strong>Multi-language Support</strong>: Support English, Chinese, Spanish</li>
+<li>📊 <strong>Interactive Display</strong>: Click to view detailed language analysis</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="installation--deployment">Installation &amp; Deployment<a href="#installation--deployment" class="hash-link" aria-label="Direct link to Installation &amp; Deployment" title="Direct link to Installation &amp; Deployment">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="prerequisites">Prerequisites<a href="#prerequisites" class="hash-link" aria-label="Direct link to Prerequisites" title="Direct link to Prerequisites">​</a></h3>
+<ul>
+<li>Node.js 18+</li>
+<li>Python 3.8+</li>
+<li>MongoDB</li>
+<li>GooseLang System</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="installation-steps">Installation Steps<a href="#installation-steps" class="hash-link" aria-label="Direct link to Installation Steps" title="Direct link to Installation Steps">​</a></h3>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="1-prerequisites">1. Prerequisites<a href="#1-prerequisites" class="hash-link" aria-label="Direct link to 1. Prerequisites" title="Direct link to 1. Prerequisites">​</a></h4>
+<p>Ensure Python 3.8 or higher is installed:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#F8F8F2"><span class="token plain"># Check Python version</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">python3 --version</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"># If not installed, install according to your OS:</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"># macOS: brew install python3</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"># Ubuntu/Debian: sudo apt-get install python3 python3-pip</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"># Windows: Download from python.org</span><br></span></code></pre></div></div>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="2-install-goosenlp-plugin">2. Install GooseNLP Plugin<a href="#2-install-goosenlp-plugin" class="hash-link" aria-label="Direct link to 2. Install GooseNLP Plugin" title="Direct link to 2. Install GooseNLP Plugin">​</a></h4>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#F8F8F2"><span class="token plain"># Navigate to GooseLang project directory</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">cd /path/to/GooseLang</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"># Install dependencies</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">yarn install</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"># Navigate to GooseNLP directory</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">cd packages/goosenlp</span><br></span></code></pre></div></div>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="3-one-click-startup-recommended">3. One-Click Startup (Recommended)<a href="#3-one-click-startup-recommended" class="hash-link" aria-label="Direct link to 3. One-Click Startup (Recommended)" title="Direct link to 3. One-Click Startup (Recommended)">​</a></h4>
+<p>GooseNLP provides a one-click startup command that automatically:</p>
+<ul>
+<li>Creates Python virtual environment</li>
+<li>Installs required dependencies</li>
+<li>Downloads language models (English, Chinese, Spanish)</li>
+<li>Starts spaCy service and GooseNLP plugin</li>
+</ul>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#F8F8F2"><span class="token plain"># Run in packages/goosenlp directory</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">npm run dev</span><br></span></code></pre></div></div>
+<p>On first run, the system will automatically:</p>
+<ol>
+<li>Create configuration and virtual environment in user directory</li>
+<li>Install Python dependency packages</li>
+<li>Download spaCy language models (~500MB)</li>
+<li>Start all necessary services</li>
+</ol>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="4-configuration-file-locations">4. Configuration File Locations<a href="#4-configuration-file-locations" class="hash-link" aria-label="Direct link to 4. Configuration File Locations" title="Direct link to 4. Configuration File Locations">​</a></h4>
+<p>GooseNLP&#x27;s configuration files and virtual environment are stored in the user directory:</p>
+<p><strong>macOS/Linux:</strong></p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#F8F8F2"><span class="token plain">~/.gooselang/</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">├── goosenlp/</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── venv/          # Python virtual environment</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── logs/          # Log files</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">│   └── config/        # Configuration files</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">└── nlp.yaml           # NLP plugin configuration</span><br></span></code></pre></div></div>
+<p><strong>Windows:</strong></p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#F8F8F2"><span class="token plain">%USERPROFILE%\.gooselang\</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">├── goosenlp\</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── venv\          # Python virtual environment</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">│   ├── logs\          # Log files</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">│   └── config\        # Configuration files</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">└── nlp.yaml           # NLP plugin configuration</span><br></span></code></pre></div></div>
+<p><strong>Note</strong>: Different OS path representations:</p>
+<ul>
+<li>macOS/Linux: <code>~</code> represents user home directory, like <code>/Users/username</code> or <code>/home/username</code></li>
+<li>Windows: <code>%USERPROFILE%</code> is usually <code>C:\Users\username</code></li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="configuration">Configuration<a href="#configuration" class="hash-link" aria-label="Direct link to Configuration" title="Direct link to Configuration">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="1-gooselang-system-configuration">1. GooseLang System Configuration<a href="#1-gooselang-system-configuration" class="hash-link" aria-label="Direct link to 1. GooseLang System Configuration" title="Direct link to 1. GooseLang System Configuration">​</a></h3>
+<p>Add GooseNLP configuration to GooseLang&#x27;s configuration file:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#F8F8F2"><span class="token comment" style="color:rgb(98, 114, 164)"># config/default.yaml or config/production.yaml</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token key atrule">goosenlp</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token comment" style="color:rgb(98, 114, 164)"># Whether to disable plugin</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token key atrule">disable</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> </span><span class="token boolean important">false</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token comment" style="color:rgb(98, 114, 164)"># spaCy service address</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token key atrule">spacy_url</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> http</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain">//127.0.0.1</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token number">1407</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token comment" style="color:rgb(98, 114, 164)"># Whether to enable cache</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token key atrule">cache_enabled</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> </span><span class="token boolean important">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token comment" style="color:rgb(98, 114, 164)"># Maximum text length</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token key atrule">max_text_length</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> </span><span class="token number">50000</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token comment" style="color:rgb(98, 114, 164)"># Host configuration</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">  </span><span class="token key atrule">hosts</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">    </span><span class="token punctuation" style="color:rgb(248, 248, 242)">-</span><span class="token plain"> </span><span class="token key atrule">server</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> http</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain">//localhost</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token number">1337</span><span class="token plain">  </span><span class="token comment" style="color:rgb(98, 114, 164)"># GooseLang server address</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token key atrule">uname</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> goosenlp_user          </span><span class="token comment" style="color:rgb(98, 114, 164)"># Authentication username</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token key atrule">password</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> your_password        </span><span class="token comment" style="color:rgb(98, 114, 164)"># Authentication password</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token key atrule">priority</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> </span><span class="token number">1</span><span class="token plain">                    </span><span class="token comment" style="color:rgb(98, 114, 164)"># Priority</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">      </span><span class="token key atrule">concurrency</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> </span><span class="token number">2</span><span class="token plain">                 </span><span class="token comment" style="color:rgb(98, 114, 164)"># Concurrency count</span><br></span></code></pre></div></div>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="2-environment-variable-configuration">2. Environment Variable Configuration<a href="#2-environment-variable-configuration" class="hash-link" aria-label="Direct link to 2. Environment Variable Configuration" title="Direct link to 2. Environment Variable Configuration">​</a></h3>
+<p>Support configuration override via environment variables:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#F8F8F2"><span class="token plain"># GooseLang server address</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">export GOOSELANG_SERVER_URL=http://your-server:1337</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"># MongoDB connection (if independent configuration needed)</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">export MONGODB_URL=mongodb://localhost:27017/gooselang</span><br></span></code></pre></div></div>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="3-plugin-configuration-file">3. Plugin Configuration File<a href="#3-plugin-configuration-file" class="hash-link" aria-label="Direct link to 3. Plugin Configuration File" title="Direct link to 3. Plugin Configuration File">​</a></h3>
+<p>Plugin configuration file is located in user directory:</p>
+<p><strong>macOS/Linux:</strong> <code>~/.gooselang/nlp.yaml</code><br>
+<strong>Windows:</strong> <code>%USERPROFILE%\.gooselang\nlp.yaml</code></p>
+<p>Configuration example:</p>
+<div class="language-yaml codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-yaml codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#F8F8F2"><span class="token comment" style="color:rgb(98, 114, 164)"># nlp.yaml</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token key atrule">type</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> goosenlp</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token key atrule">server</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> http</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain">//localhost</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token number">1337</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token key atrule">uname</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> nlp_worker</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token key atrule">password</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> secure_password</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token key atrule">spacyUrl</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> http</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain">//127.0.0.1</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token number">1407</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token key atrule">cacheEnabled</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> </span><span class="token boolean important">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token key atrule">concurrency</span><span class="token punctuation" style="color:rgb(248, 248, 242)">:</span><span class="token plain"> </span><span class="token number">2</span><br></span></code></pre></div></div>
+<p>A default configuration file will be automatically created when running <code>npm run dev</code> for the first time.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="usage-flow">Usage Flow<a href="#usage-flow" class="hash-link" aria-label="Direct link to Usage Flow" title="Direct link to Usage Flow">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="1-enable-nlp-in-material-list">1. Enable NLP in Material List<a href="#1-enable-nlp-in-material-list" class="hash-link" aria-label="Direct link to 1. Enable NLP in Material List" title="Direct link to 1. Enable NLP in Material List">​</a></h3>
+<ol>
+<li>Open a problem page containing text materials</li>
+<li>Find the &quot;Part-of-Speech Tagging&quot; toggle above the material list</li>
+<li>Turn on the toggle, and the system will automatically analyze current materials</li>
+</ol>
+<p><img decoding="async" loading="lazy" alt="NLP Toggle Switch" src="/assets/images/nlp-toggle-b6b8148fd3fd3b749362ce500c3fccb0.png" width="4320" height="4320" class="img_ev3q"></p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="2-view-annotation-results">2. View Annotation Results<a href="#2-view-annotation-results" class="hash-link" aria-label="Direct link to 2. View Annotation Results" title="Direct link to 2. View Annotation Results">​</a></h3>
+<p>After enabling, text will be annotated as different colored phrase blocks:</p>
+<ul>
+<li>🔵 <strong>Blue</strong>: Nouns/Noun phrases</li>
+<li>🟢 <strong>Green</strong>: Verbs/Verb phrases</li>
+<li>🟡 <strong>Yellow</strong>: Adjectives</li>
+<li>🟠 <strong>Orange</strong>: Adverbs</li>
+<li>🟣 <strong>Purple</strong>: Proper nouns</li>
+<li>Other colors correspond to different parts of speech</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="3-interactive-detail-viewing">3. Interactive Detail Viewing<a href="#3-interactive-detail-viewing" class="hash-link" aria-label="Direct link to 3. Interactive Detail Viewing" title="Direct link to 3. Interactive Detail Viewing">​</a></h3>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="basic-interactions">Basic Interactions<a href="#basic-interactions" class="hash-link" aria-label="Direct link to Basic Interactions" title="Direct link to Basic Interactions">​</a></h4>
+<ul>
+<li><strong>Mouse Hover</strong>: Quickly view part-of-speech and lemma information</li>
+<li><strong>Click to Pin</strong>: Click phrase tags to pin detailed information display</li>
+<li><strong>Click Again</strong>: Close detail window</li>
+</ul>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="detail-window-content">Detail Window Content<a href="#detail-window-content" class="hash-link" aria-label="Direct link to Detail Window Content" title="Direct link to Detail Window Content">​</a></h4>
+<p>The detail window displays in an elegant dropdown format, containing:</p>
+<ol>
+<li>
+<p><strong>Phrase Information</strong></p>
+<ul>
+<li>Phrase type (e.g., noun_phrase, verb_phrase)</li>
+<li>Main part-of-speech (e.g., NOUN, VERB)</li>
+</ul>
+</li>
+<li>
+<p><strong>Components</strong> (multi-word phrases)</p>
+<ul>
+<li>Original text of each word</li>
+<li>POS tags</li>
+<li>POS descriptions (e.g., &quot;noun&quot;, &quot;verb&quot;)</li>
+</ul>
+</li>
+</ol>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="interface-display-example">Interface Display Example<a href="#interface-display-example" class="hash-link" aria-label="Direct link to Interface Display Example" title="Direct link to Interface Display Example">​</a></h4>
+<p>When you click a phrase, you&#x27;ll see an information box like this:</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-text codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#F8F8F2"><span class="token plain">┌─────────────────────────────┐</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">│ Type: noun_phrase           │</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">│ Main POS: NOUN              │</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">│ ─────────────────────────── │</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">│ Components:                 │</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">│ • The: DET (Determiner)     │</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">│ • quick: ADJ (Adjective)    │</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">│ • brown: ADJ (Adjective)    │</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">│ • fox: NOUN (Noun)          │</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">└─────────────────────────────┘</span><br></span></code></pre></div></div>
+<p>The information box intelligently positions itself to ensure complete display within the viewport.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="4-switch-materials">4. Switch Materials<a href="#4-switch-materials" class="hash-link" aria-label="Direct link to 4. Switch Materials" title="Direct link to 4. Switch Materials">​</a></h3>
+<p>When switching to other materials:</p>
+<ul>
+<li>NLP toggle will automatically reset</li>
+<li>Need to re-enable to analyze new materials</li>
+<li>Analyzed results are cached for faster loading on revisit</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="supported-languages">Supported Languages<a href="#supported-languages" class="hash-link" aria-label="Direct link to Supported Languages" title="Direct link to Supported Languages">​</a></h3>
+<p>Currently supports automatic detection and analysis of the following languages:</p>
+<table><thead><tr><th>Language</th><th>Code</th><th>Features</th></tr></thead><tbody><tr><td>English</td><td>en</td><td>Complete POS, entity, dependency analysis</td></tr><tr><td>Chinese</td><td>zh</td><td>Word segmentation, POS, entity recognition</td></tr><tr><td>Spanish</td><td>es</td><td>POS, entity, dependency analysis</td></tr></tbody></table>
+<p>The system automatically detects text language and can auto-select based on system language settings.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="nlp-feature-characteristics">NLP Feature Characteristics<a href="#nlp-feature-characteristics" class="hash-link" aria-label="Direct link to NLP Feature Characteristics" title="Direct link to NLP Feature Characteristics">​</a></h3>
+<ol>
+<li>
+<p><strong>Part-of-Speech Tagging (POS)</strong></p>
+<ul>
+<li>Identify grammatical role of each word</li>
+<li>Provide detailed POS descriptions</li>
+</ul>
+</li>
+<li>
+<p><strong>Phrase Extraction</strong></p>
+<ul>
+<li>Intelligently combine related words</li>
+<li>Maintain reading fluency</li>
+</ul>
+</li>
+<li>
+<p><strong>Named Entity Recognition (NER)</strong></p>
+<ul>
+<li>Identify person names, locations, organizations, etc.</li>
+<li>Display in statistical information</li>
+</ul>
+</li>
+<li>
+<p><strong>Lemmatization</strong></p>
+<ul>
+<li>Show base form of words</li>
+<li>Help understand word variations</li>
+</ul>
+</li>
+</ol>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="performance-optimization">Performance Optimization<a href="#performance-optimization" class="hash-link" aria-label="Direct link to Performance Optimization" title="Direct link to Performance Optimization">​</a></h3>
+<ul>
+<li><strong>Smart Caching</strong>: Identical content won&#x27;t be reprocessed</li>
+<li><strong>Streaming Loading</strong>: Large texts processed in batches</li>
+<li><strong>Concurrent Processing</strong>: Support simultaneous analysis of multiple materials</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="faq">FAQ<a href="#faq" class="hash-link" aria-label="Direct link to FAQ" title="Direct link to FAQ">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="q1-why-does-nlp-keep-loading-after-enabling">Q1: Why does NLP keep loading after enabling?<a href="#q1-why-does-nlp-keep-loading-after-enabling" class="hash-link" aria-label="Direct link to Q1: Why does NLP keep loading after enabling?" title="Direct link to Q1: Why does NLP keep loading after enabling?">​</a></h3>
+<p><strong>Possible Causes</strong>:</p>
+<ol>
+<li>spaCy service not started</li>
+<li>Network connection issues</li>
+<li>Text too long exceeding limits</li>
+</ol>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li>Check if spaCy service is running: <code>curl http://127.0.0.1:1407/health</code></li>
+<li>View GooseNLP plugin logs</li>
+<li>Confirm text length doesn&#x27;t exceed configured maximum</li>
+</ol>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="q2-how-to-handle-inaccurate-language-recognition">Q2: How to handle inaccurate language recognition?<a href="#q2-how-to-handle-inaccurate-language-recognition" class="hash-link" aria-label="Direct link to Q2: How to handle inaccurate language recognition?" title="Direct link to Q2: How to handle inaccurate language recognition?">​</a></h3>
+<p><strong>Solutions</strong>:</p>
+<ol>
+<li>System automatically detects and corrects language</li>
+<li>Ensure text contains sufficient language features</li>
+<li>Mixed language text may affect recognition accuracy</li>
+</ol>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="q3-how-to-add-new-language-support">Q3: How to add new language support?<a href="#q3-how-to-add-new-language-support" class="hash-link" aria-label="Direct link to Q3: How to add new language support?" title="Direct link to Q3: How to add new language support?">​</a></h3>
+<p><strong>Steps</strong>:</p>
+<ol>
+<li>Install corresponding spaCy language model</li>
+<li>Add model configuration in <code>spacy_server.py</code></li>
+<li>Update language detection logic</li>
+<li>Restart services</li>
+</ol>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="q4-how-to-clear-cache">Q4: How to clear cache?<a href="#q4-how-to-clear-cache" class="hash-link" aria-label="Direct link to Q4: How to clear cache?" title="Direct link to Q4: How to clear cache?">​</a></h3>
+<p><strong>MongoDB Cache</strong>:</p>
+<div class="language-javascript codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-javascript codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#F8F8F2"><span class="token comment" style="color:rgb(98, 114, 164)">// Connect to MongoDB</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">use gooselang</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"></span><span class="token comment" style="color:rgb(98, 114, 164)">// Clear NLP cache</span><span class="token plain"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">db</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token property-access">nlp_cache</span><span class="token punctuation" style="color:rgb(248, 248, 242)">.</span><span class="token method function property-access" style="color:rgb(80, 250, 123)">remove</span><span class="token punctuation" style="color:rgb(248, 248, 242)">(</span><span class="token punctuation" style="color:rgb(248, 248, 242)">{</span><span class="token punctuation" style="color:rgb(248, 248, 242)">}</span><span class="token punctuation" style="color:rgb(248, 248, 242)">)</span><span class="token punctuation" style="color:rgb(248, 248, 242)">;</span><br></span></code></pre></div></div>
+<p><strong>Memory Cache</strong>:
+Restart GooseNLP plugin to clear memory cache.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="q5-how-to-view-processing-logs">Q5: How to view processing logs?<a href="#q5-how-to-view-processing-logs" class="hash-link" aria-label="Direct link to Q5: How to view processing logs?" title="Direct link to Q5: How to view processing logs?">​</a></h3>
+<p>Log file locations vary by operating system:</p>
+<p><strong>macOS/Linux:</strong></p>
+<ul>
+<li>GooseNLP plugin logs: View console output</li>
+<li>spaCy service logs: <code>~/.gooselang/goosenlp/logs/</code></li>
+</ul>
+<p><strong>Windows:</strong></p>
+<ul>
+<li>GooseNLP plugin logs: View console output</li>
+<li>spaCy service logs: <code>%USERPROFILE%\.gooselang\goosenlp\logs\</code></li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="important-notes">Important Notes<a href="#important-notes" class="hash-link" aria-label="Direct link to Important Notes" title="Direct link to Important Notes">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="security-considerations">Security Considerations<a href="#security-considerations" class="hash-link" aria-label="Direct link to Security Considerations" title="Direct link to Security Considerations">​</a></h3>
+<ol>
+<li>
+<p><strong>Authentication Configuration</strong></p>
+<ul>
+<li>Always set strong passwords</li>
+<li>Don&#x27;t hardcode sensitive information in config files</li>
+<li>Use environment variables to manage credentials</li>
+</ul>
+</li>
+<li>
+<p><strong>Network Security</strong></p>
+<ul>
+<li>spaCy service should only listen on local address</li>
+<li>Use HTTPS in production</li>
+<li>Configure firewall rules</li>
+</ul>
+</li>
+</ol>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="performance-considerations">Performance Considerations<a href="#performance-considerations" class="hash-link" aria-label="Direct link to Performance Considerations" title="Direct link to Performance Considerations">​</a></h3>
+<ol>
+<li>
+<p><strong>Resource Usage</strong></p>
+<ul>
+<li>NLP processing is CPU and memory intensive</li>
+<li>Recommend sufficient system resources</li>
+<li>Can adjust concurrency to control resource usage</li>
+</ul>
+</li>
+<li>
+<p><strong>Text Length</strong></p>
+<ul>
+<li>Very long texts may cause slow processing</li>
+<li>Recommend reasonable maximum length limits</li>
+<li>Consider segmented processing for large documents</li>
+</ul>
+</li>
+</ol>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="usage-recommendations">Usage Recommendations<a href="#usage-recommendations" class="hash-link" aria-label="Direct link to Usage Recommendations" title="Direct link to Usage Recommendations">​</a></h3>
+<ol>
+<li>
+<p><strong>Best Practices</strong></p>
+<ul>
+<li>Regularly clean expired cache</li>
+<li>Monitor service running status</li>
+<li>Keep language models updated</li>
+</ul>
+</li>
+<li>
+<p><strong>Troubleshooting</strong></p>
+<ul>
+<li>Keep logs</li>
+<li>Set up monitoring alerts</li>
+<li>Prepare fallback solutions</li>
+</ul>
+</li>
+</ol>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="appendix">Appendix<a href="#appendix" class="hash-link" aria-label="Direct link to Appendix" title="Direct link to Appendix">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="command-quick-reference">Command Quick Reference<a href="#command-quick-reference" class="hash-link" aria-label="Direct link to Command Quick Reference" title="Direct link to Command Quick Reference">​</a></h3>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#F8F8F2"><span class="token plain"># One-click startup (recommended)</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">npm run dev          # Auto-setup environment and start all services</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"># Start separately</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">npm run start:python  # Start spaCy service only</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">npm run start:node    # Start GooseNLP plugin only</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"># Debug and test</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">npm run test         # Run tests</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">npm run health       # Health check</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">npm run info         # View service information</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"># Manual management (usually not needed)</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"># Activate virtual environment</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"># macOS/Linux:</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">source ~/.gooselang/goosenlp/venv/bin/activate</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"># Windows:</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">%USERPROFILE%\.gooselang\goosenlp\venv\Scripts\activate</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain" style="display:inline-block"></span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain"># View installed language models</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">python -m spacy info</span><br></span></code></pre></div></div>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="configuration-templates">Configuration Templates<a href="#configuration-templates" class="hash-link" aria-label="Direct link to Configuration Templates" title="Direct link to Configuration Templates">​</a></h3>
+<p>Complete configuration example files can be found in <code>packages/goosenlp/nlp.example.yaml</code>.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="test-server-developer-tool">Test Server (Developer Tool)<a href="#test-server-developer-tool" class="hash-link" aria-label="Direct link to Test Server (Developer Tool)" title="Direct link to Test Server (Developer Tool)">​</a></h3>
+<p>GooseNLP provides an independent test page for developers to quickly test NLP functionality:</p>
+<div class="language-bash codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#F8F8F2;--prism-background-color:#282A36"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-bash codeBlock_bY9V thin-scrollbar" style="color:#F8F8F2;background-color:#282A36"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#F8F8F2"><span class="token plain"># Start test server</span><br></span><span class="token-line" style="color:#F8F8F2"><span class="token plain">npm run test-server</span><br></span></code></pre></div></div>
+<p>Visit <a href="http://127.0.0.1:3456" target="_blank" rel="noopener noreferrer">http://127.0.0.1:3456</a> to view the test page, featuring:</p>
+<ul>
+<li>Input any text for real-time analysis</li>
+<li>Test multi-language auto-detection</li>
+<li>View detailed NLP analysis results</li>
+<li>Verify service connection status</li>
+</ul>
+<p>This is a convenient tool for debugging NLP services and testing new features.</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="getting-help">Getting Help<a href="#getting-help" class="hash-link" aria-label="Direct link to Getting Help" title="Direct link to Getting Help">​</a></h3>
+<ul>
+<li>View project documentation: <code>packages/goosenlp/README.md</code></li>
+<li>Submit issues: GitHub Issues</li>
+<li>Community discussion: GooseLang Forum</li>
+</ul>
+<hr>
+<p><em>Guide Version: 1.0.0</em><br>
+<em>Last Updated: 2025-08-02</em></p></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col"><a href="https://github.com/GooseLang-Dev/gooselang.github.io/tree/main/i18n/en/docusaurus-plugin-content-docs-guide/current/plugin/goosenlp-user-guide.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"><span class="theme-last-updated">Last updated<!-- --> on <b><time datetime="2025-08-04T05:42:07.000Z" itemprop="dateModified">Aug 4, 2025</time></b> by <b>BruceWJ</b></span></div></div></footer></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/guide/category/plugins"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Plugins</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/guide/intro"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Getting Started with GooseLang</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#table-of-contents" class="table-of-contents__link toc-highlight">Table of Contents</a></li><li><a href="#quick-start" class="table-of-contents__link toc-highlight">Quick Start</a><ul><li><a href="#main-features" class="table-of-contents__link toc-highlight">Main Features</a></li></ul></li><li><a href="#installation--deployment" class="table-of-contents__link toc-highlight">Installation &amp; Deployment</a><ul><li><a href="#prerequisites" class="table-of-contents__link toc-highlight">Prerequisites</a></li><li><a href="#installation-steps" class="table-of-contents__link toc-highlight">Installation Steps</a></li></ul></li><li><a href="#configuration" class="table-of-contents__link toc-highlight">Configuration</a><ul><li><a href="#1-gooselang-system-configuration" class="table-of-contents__link toc-highlight">1. GooseLang System Configuration</a></li><li><a href="#2-environment-variable-configuration" class="table-of-contents__link toc-highlight">2. Environment Variable Configuration</a></li><li><a href="#3-plugin-configuration-file" class="table-of-contents__link toc-highlight">3. Plugin Configuration File</a></li></ul></li><li><a href="#usage-flow" class="table-of-contents__link toc-highlight">Usage Flow</a><ul><li><a href="#1-enable-nlp-in-material-list" class="table-of-contents__link toc-highlight">1. Enable NLP in Material List</a></li><li><a href="#2-view-annotation-results" class="table-of-contents__link toc-highlight">2. View Annotation Results</a></li><li><a href="#3-interactive-detail-viewing" class="table-of-contents__link toc-highlight">3. Interactive Detail Viewing</a></li><li><a href="#4-switch-materials" class="table-of-contents__link toc-highlight">4. Switch Materials</a></li></ul></li><li><a href="#features" class="table-of-contents__link toc-highlight">Features</a><ul><li><a href="#supported-languages" class="table-of-contents__link toc-highlight">Supported Languages</a></li><li><a href="#nlp-feature-characteristics" class="table-of-contents__link toc-highlight">NLP Feature Characteristics</a></li><li><a href="#performance-optimization" class="table-of-contents__link toc-highlight">Performance Optimization</a></li></ul></li><li><a href="#faq" class="table-of-contents__link toc-highlight">FAQ</a><ul><li><a href="#q1-why-does-nlp-keep-loading-after-enabling" class="table-of-contents__link toc-highlight">Q1: Why does NLP keep loading after enabling?</a></li><li><a href="#q2-how-to-handle-inaccurate-language-recognition" class="table-of-contents__link toc-highlight">Q2: How to handle inaccurate language recognition?</a></li><li><a href="#q3-how-to-add-new-language-support" class="table-of-contents__link toc-highlight">Q3: How to add new language support?</a></li><li><a href="#q4-how-to-clear-cache" class="table-of-contents__link toc-highlight">Q4: How to clear cache?</a></li><li><a href="#q5-how-to-view-processing-logs" class="table-of-contents__link toc-highlight">Q5: How to view processing logs?</a></li></ul></li><li><a href="#important-notes" class="table-of-contents__link toc-highlight">Important Notes</a><ul><li><a href="#security-considerations" class="table-of-contents__link toc-highlight">Security Considerations</a></li><li><a href="#performance-considerations" class="table-of-contents__link toc-highlight">Performance Considerations</a></li><li><a href="#usage-recommendations" class="table-of-contents__link toc-highlight">Usage Recommendations</a></li></ul></li><li><a href="#appendix" class="table-of-contents__link toc-highlight">Appendix</a><ul><li><a href="#command-quick-reference" class="table-of-contents__link toc-highlight">Command Quick Reference</a></li><li><a href="#configuration-templates" class="table-of-contents__link toc-highlight">Configuration Templates</a></li><li><a href="#test-server-developer-tool" class="table-of-contents__link toc-highlight">Test Server (Developer Tool)</a></li><li><a href="#getting-help" class="table-of-contents__link toc-highlight">Getting Help</a></li></ul></li></ul></div></div></div></div></main></div></div></div></div>
+</body>
+</html>

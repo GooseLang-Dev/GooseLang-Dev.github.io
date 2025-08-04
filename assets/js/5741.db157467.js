@@ -1,0 +1,1 @@
+(self.webpackChunkgooselang_docs=self.webpackChunkgooselang_docs||[]).push([[5741],{5741:()=>{}}]);
