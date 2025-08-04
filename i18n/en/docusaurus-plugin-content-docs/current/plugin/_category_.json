@@ -1,0 +1,8 @@
+{
+  "label": "Plugin Development",
+  "position": 7,
+  "link": {
+    "type": "generated-index",
+    "description": "Learn how to develop plugins for GooseLang system"
+  }
+}
